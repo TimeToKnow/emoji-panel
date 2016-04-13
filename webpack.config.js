@@ -50,12 +50,20 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        include: [path.resolve(__dirname, 'src')],
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'example')
+        ],
         loader: 'babel',
         query: {
           presets: ['es2015']
         }
       }
     ]
+  },
+  resolve: {
+    alias: {
+      'emoji-window': path.join(__dirname, 'src', 'emoji-window.js')
+    }
   }
 };
