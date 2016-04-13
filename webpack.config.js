@@ -43,7 +43,6 @@ module.exports = {
     preLoaders: [
       {
         test: /\.json$/,
-        exclude: /node_modules/,
         loader: 'json'
       }
     ],
