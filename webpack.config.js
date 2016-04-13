@@ -10,6 +10,9 @@ module.exports = {
   entry: {
     'emoji-window': [
       './src/emoji-window.js'
+    ],
+    example: [
+      './example/example.js'
     ]
   },
   output: {
