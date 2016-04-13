@@ -6,7 +6,7 @@ const __PROD__ = process.env.NODE_ENV === 'production';
 const __DEV__ = !__PROD__;
 
 module.exports = {
-  devtool: __DEV__ ? 'source-map' : false,
+  devtool: false,
   entry: {
     'emoji-window': [
       './src/emoji-window.js'
