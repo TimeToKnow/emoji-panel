@@ -2,6 +2,9 @@
 const webpack = require('webpack');
 const path = require('path');
 
+// Plugins
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const __PROD__ = process.env.NODE_ENV === 'production';
 const __DEV__ = !__PROD__;
 
@@ -9,10 +12,12 @@ module.exports = {
   devtool: false,
   entry: {
     'emoji-panel': [
-      './src/emoji-panel.js'
+      './src/emoji-panel.js',
+      './src/emoji-panel.scss'
     ],
     example: [
-      './example/example.js'
+      './example/example.js',
+      './example/example.scss'
     ]
   },
   output: {
@@ -21,6 +26,7 @@ module.exports = {
     publicPath: ''
   },
   plugins: [
+    new ExtractTextPlugin(`[name]${__PROD__ ? '.min' : ''}.css`),
     new webpack.DefinePlugin({
       __PROD__: JSON.stringify(__PROD__),
       __DEV__: JSON.stringify(__DEV__),
@@ -57,12 +63,21 @@ module.exports = {
         query: {
           presets: ['es2015']
         }
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
+      },
+      {
+        test: /\.png$/,
+        loader: 'url?limit=1&name=./asset/[hash].[ext]'
       }
     ]
   },
   resolve: {
     alias: {
-      'emoji-panel': path.join(__dirname, 'src', 'emoji-panel.js')
+      'emoji-panel': path.join(__dirname, 'src', 'emoji-panel.js'),
+      'emoji-panel.css': path.join(__dirname, 'src', 'emoji-panel.scss')
     }
   }
 };

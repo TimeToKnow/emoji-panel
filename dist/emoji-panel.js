@@ -44,7 +44,8 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	__webpack_require__(1);
+	module.exports = __webpack_require__(5);
 
 
 /***/ },
@@ -86,6 +87,8 @@
 
 	    var _ref$imageSet = _ref.imageSet;
 	    var imageSet = _ref$imageSet === undefined ? _constant.IMAGE_SET.APPLE : _ref$imageSet;
+	    var _ref$size = _ref.size;
+	    var size = _ref$size === undefined ? _constant.SIZE['64'] : _ref$size;
 
 	    _classCallCheck(this, EmojiPanel);
 
@@ -99,9 +102,14 @@
 	        throw new Error('`imageSet` should have one of `EmojiPanel.IMAGE_SET` values, got ${imageSet}.');
 	      }
 	    }
-	    var windowImageSet = EmojiPanel.createWindowImageSet(imageSet);
+	    var windowImageSet = EmojiPanel.createWindowImageSet({ imageSet: imageSet, size: size });
 	    el.innerHTML = '';
 	    el.appendChild(windowImageSet);
+
+	    // Privates
+	    this._eventListeners = {
+	      click: []
+	    };
 	  }
 
 	  return EmojiPanel;
@@ -111,12 +119,13 @@
 
 	exports.default = EmojiPanel;
 	EmojiPanel.IMAGE_SET = _constant.IMAGE_SET;
+	EmojiPanel.SIZE = _constant.SIZE;
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -128,16 +137,23 @@
 	  EMOJIONE: 4
 	};
 
-	var CATEGORIES = exports.CATEGORIES = {
-	  Activity: 'Activity',
-	  Flags: 'Flags',
-	  Foods: 'Foods',
-	  Nature: 'Nature',
-	  Objects: 'Objects',
-	  People: 'People',
-	  Places: 'Places',
-	  Symbols: 'Symbols',
-	  Other: null
+	var SIZE = exports.SIZE = {
+	  16: 0,
+	  20: 1,
+	  32: 2,
+	  64: 4
+	};
+
+	var CATEGORY = exports.CATEGORY = {
+	  ACTIVITY: 0,
+	  FLAGS: 1,
+	  FOODS: 2,
+	  NATURE: 4,
+	  OBJECTS: 8,
+	  PEOPLE: 16,
+	  PLACES: 32,
+	  SYMBOLS: 64,
+	  OTHER: 128
 	};
 
 /***/ },
@@ -160,29 +176,99 @@
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-	var getSortedEmojiData = function getSortedEmojiData() {
-	  var categoryMap = Object.keys(_constant.CATEGORIES).reduce(function (obj, category) {
-	    return Object.assign(obj, _defineProperty({}, _constant.CATEGORIES[category], category));
-	  }, {});
+	var categoryMap = {
+	  Activity: _constant.CATEGORY.ACTIVITY,
+	  Flags: _constant.CATEGORY.FLAGS,
+	  Foods: _constant.CATEGORY.FOODS,
+	  Nature: _constant.CATEGORY.NATURE,
+	  Objects: _constant.CATEGORY.OBJECTS,
+	  People: _constant.CATEGORY.PEOPLE,
+	  Places: _constant.CATEGORY.PLACES,
+	  Symbols: _constant.CATEGORY.SYMBOLS,
+	  null: _constant.CATEGORY.OTHER
+	};
+
+	var getBoolNameByImageSet = function getBoolNameByImageSet(imageSet) {
+	  switch (imageSet) {
+	    case _constant.IMAGE_SET.APPLE:
+	      return 'has_img_apple';
+	    case _constant.IMAGE_SET.GOOGLE:
+	      return 'has_img_google';
+	    case _constant.IMAGE_SET.TWITTER:
+	      return 'has_img_twitter';
+	    case _constant.IMAGE_SET.EMOJIONE:
+	      return 'has_img_emojione';
+	  }
+	};
+
+	var sizeMap = Object.keys(_constant.SIZE).reduce(function (obj, sizeKey) {
+	  return Object.assign(obj, _defineProperty({}, _constant.SIZE[sizeKey], sizeKey));
+	}, {});
+
+	var getSizeKeyByValue = function getSizeKeyByValue(size) {
+	  return sizeMap[size];
+	};
+
+	var getEmojiClassNameByImageSetAndSize = function getEmojiClassNameByImageSetAndSize() {
+	  var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	  var imageSet = _ref.imageSet;
+	  var size = _ref.size;
+
+	  var sizeString = getSizeKeyByValue(size);
+
+	  var imageSetString = void 0;
+	  switch (imageSet) {
+	    case _constant.IMAGE_SET.APPLE:
+	      imageSetString = 'a';
+	      break;
+	    case _constant.IMAGE_SET.GOOGLE:
+	      imageSetString = 'g';
+	      break;
+	    case _constant.IMAGE_SET.TWITTER:
+	      imageSetString = 't';
+	      break;
+	    case _constant.IMAGE_SET.EMOJIONE:
+	      imageSetString = 'e';
+	      break;
+	  }
+
+	  var emojiClassName = 'ep-e-' + imageSetString + '-' + sizeString;
+	  return emojiClassName;
+	};
+
+	var getSortedEmojiData = function getSortedEmojiData(imageSet) {
+	  var boolName = getBoolNameByImageSet(imageSet);
 
 	  var sortedEmojiData = _emojiData2.default.sort(function (emojiA, emojiB) {
 	    return emojiA['sort_order'] - emojiB['sort_order'];
 	  }).reduce(function (obj, emoji) {
-	    var categoryName = categoryMap[emoji.category];
-	    var categoryArray = obj[categoryName] || [];
-	    return Object.assign(obj, _defineProperty({}, categoryName, categoryArray.concat(emoji)));
+	    if (emoji[boolName]) {
+	      var category = categoryMap[emoji.category];
+	      var categoryArray = obj[category] || [];
+	      return Object.assign(obj, _defineProperty({}, category, categoryArray.concat(emoji)));
+	    } else {
+	      return obj;
+	    }
 	  }, {});
 	  return sortedEmojiData;
 	};
 
-	exports.default = function (imageSet) {
-	  var sortedEmojiData = getSortedEmojiData();
+	exports.default = function () {
+	  var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-	  return '\n    <div>\n      <div>\n        ' + Object.keys(_constant.CATEGORIES).map(function (category) {
-	    return '\n        <span>\n          ' + category + '\n        </span>\n        ';
-	  }).join('') + '\n      </div>\n      <div>\n        ' + Object.keys(_constant.CATEGORIES).map(function (category) {
-	    return '\n        <div>\n          <div>\n            ' + category + '\n          </div>\n          <div>\n            ' + sortedEmojiData[category].map(function (emoji) {
-	      return '\n            <span>\n              ' + emoji.name + '\n            </span>\n            ';
+	  var imageSet = _ref2.imageSet;
+	  var size = _ref2.size;
+
+	  var sortedEmojiData = getSortedEmojiData(imageSet);
+	  var emojiClassName = getEmojiClassNameByImageSetAndSize({ imageSet: imageSet, size: size });
+	  var sizeNumber = Number(getSizeKeyByValue(size));
+
+	  return '\n    <div>\n      <div>\n        ' + Object.keys(_constant.CATEGORY).map(function (categoryKey) {
+	    return '\n        <span>\n          ' + categoryKey + '\n        </span>\n        ';
+	  }).join('') + '\n      </div>\n      <div>\n        ' + Object.keys(_constant.CATEGORY).map(function (categoryKey) {
+	    return '\n        <div>\n          <div>\n            ' + categoryKey + '\n          </div>\n          <div>\n            ' + sortedEmojiData[_constant.CATEGORY[categoryKey]].map(function (emoji) {
+	      return '\n            <span class=' + emojiClassName + ' style="width: ' + sizeNumber + 'px; height: ' + sizeNumber + 'px; background-position: -' + emoji.sheet_x * sizeNumber + 'px -' + emoji.sheet_y * sizeNumber + 'px;">\n            </span>\n            ';
 	    }).join('') + '\n          </div>\n        </div>\n        ';
 	  }).join('') + '\n      </div>\n    </div>\n    ';
 	};
@@ -35040,6 +35126,12 @@
 			"has_img_emojione": false
 		}
 	];
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

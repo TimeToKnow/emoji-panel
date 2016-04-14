@@ -1,18 +1,28 @@
 'use strict';
-
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 const webpackBaseConfig = require('./webpack.config');
+
+// Plugins
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports =
 Object.assign(webpackBaseConfig, {
-  devtool: 'source-map', // Add source maps
   entry: Object.assign({},  {
-    example: webpackBaseConfig.entry.example,
+    'dist/example.min': webpackBaseConfig.entry.example, // Change location and file name to match the ones in github page
     base: [] // Hot reload will be injected here
   }),
-  output: Object.assign(webpackBaseConfig.output, {
-    filename: '[name].min.js', // Change js file name to `min.js` even though it's not minified just so won't need to change `index.html` to fit github
-    publicPath: 'dist' // So that index.html won't need to change emoji-windiw.js import location also on github
+  module: Object.assign(webpackBaseConfig.module, {
+    loaders: webpackBaseConfig.module.loaders.map(loaderObj => {
+      const loaderTestString = loaderObj.test.toString();
+      if (loaderTestString === /\.png$/.toString()) {
+        return Object.assign(loaderObj, {
+          loader: 'url?limit=1&name=/[hash].[ext]' // Changed to absolute path because css will try to loader assets from url
+        });
+      } else {
+        return loaderObj;
+      }
+    })
   }),
   plugins: webpackBaseConfig.plugins.concat([
     new HtmlWebpackPlugin({
