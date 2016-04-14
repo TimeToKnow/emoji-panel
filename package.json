@@ -8,7 +8,7 @@
     "build": "webpack --progress",
     "start": "webpack-dev-server --port 8080 --inline --progress --colors --config ./webpack.dev.config.js",
     "predeploy": "set NODE_ENV=development&& npm run build && set NODE_ENV=production&& npm run build",
-    "deploy": "npm run predeploy && git add dist && git add dist/* && git commit -m \"Deploy build files\" git checkout gh-pages && git merge master && git push && git checkout master && git push"
+    "deploy": "npm run predeploy && git add dist && git add dist/* && git commit -m \"Deploy build files\" && git checkout gh-pages && git merge master && git push && git checkout master && git push"
   },
   "repository": {
     "type": "git",
