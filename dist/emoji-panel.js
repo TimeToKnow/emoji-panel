@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(5);
+	module.exports = __webpack_require__(9);
 
 
 /***/ },
@@ -58,62 +58,45 @@
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _constant = __webpack_require__(2);
 
-	var _getImageSetTemplate = __webpack_require__(3);
+	var _createPanel = __webpack_require__(3);
 
-	var _getImageSetTemplate2 = _interopRequireDefault(_getImageSetTemplate);
+	var _createPanel2 = _interopRequireDefault(_createPanel);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var EmojiPanel = function () {
-	  _createClass(EmojiPanel, null, [{
-	    key: 'createWindowImageSet',
-	    value: function createWindowImageSet(imageSet) {
-	      var windowImageSet = document.createElement('div');
-	      var imageSetTemplate = (0, _getImageSetTemplate2.default)(imageSet);
-	      windowImageSet.innerHTML = imageSetTemplate;
+	var EmojiPanel = function EmojiPanel(el) {
+	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-	      return windowImageSet;
+	  var _ref$imageSet = _ref.imageSet;
+	  var imageSet = _ref$imageSet === undefined ? _constant.IMAGE_SET.APPLE : _ref$imageSet;
+	  var _ref$size = _ref.size;
+	  var size = _ref$size === undefined ? _constant.SIZE['64'] : _ref$size;
+
+	  _classCallCheck(this, EmojiPanel);
+
+	  if (true) {
+	    if (!(el && el.nodeType)) {
+	      throw new Error('Element must be provided to the first argument of `EmojiPanel` constructor.');
 	    }
-	  }]);
-
-	  function EmojiPanel(el) {
-	    var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	    var _ref$imageSet = _ref.imageSet;
-	    var imageSet = _ref$imageSet === undefined ? _constant.IMAGE_SET.APPLE : _ref$imageSet;
-	    var _ref$size = _ref.size;
-	    var size = _ref$size === undefined ? _constant.SIZE['64'] : _ref$size;
-
-	    _classCallCheck(this, EmojiPanel);
-
-	    if (true) {
-	      if (!(el && el.nodeType)) {
-	        throw new Error('Element must be provided to the first argument of `EmojiPanel` constructor.');
-	      }
-	      if (Object.keys(_constant.IMAGE_SET).map(function (key) {
-	        return _constant.IMAGE_SET[key];
-	      }).indexOf(imageSet) === -1) {
-	        throw new Error('`imageSet` should have one of `EmojiPanel.IMAGE_SET` values, got ${imageSet}.');
-	      }
+	    if (Object.keys(_constant.IMAGE_SET).map(function (key) {
+	      return _constant.IMAGE_SET[key];
+	    }).indexOf(imageSet) === -1) {
+	      throw new Error('`imageSet` should have one of `EmojiPanel.IMAGE_SET` values, got ${imageSet}.');
 	    }
-	    var windowImageSet = EmojiPanel.createWindowImageSet({ imageSet: imageSet, size: size });
-	    el.innerHTML = '';
-	    el.appendChild(windowImageSet);
-
-	    // Privates
-	    this._eventListeners = {
-	      click: []
-	    };
 	  }
+	  var windowImageSet = (0, _createPanel2.default)({ imageSet: imageSet, size: size });
+	  el.innerHTML = '';
+	  el.appendChild(windowImageSet);
 
-	  return EmojiPanel;
-	}();
+	  // Privates
+	  this._eventListeners = {
+	    click: []
+	  };
+	};
 	// EmojiPanel static properties
 
 
@@ -166,27 +149,56 @@
 	  value: true
 	});
 
-	var _emojiData = __webpack_require__(4);
+	var _getPanelTemplate = __webpack_require__(4);
+
+	var _getPanelTemplate2 = _interopRequireDefault(_getPanelTemplate);
+
+	var _setEventsForTemplate = __webpack_require__(8);
+
+	var _setEventsForTemplate2 = _interopRequireDefault(_setEventsForTemplate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function () {
+	  var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	  var imageSet = _ref.imageSet;
+	  var size = _ref.size;
+
+	  var panelEl = document.createElement('div');
+	  panelEl.setAttribute('class', 'ep-container');
+	  var panelTemplate = (0, _getPanelTemplate2.default)({ imageSet: imageSet, size: size });
+	  panelEl.innerHTML = panelTemplate;
+	  (0, _setEventsForTemplate2.default)(panelEl);
+
+	  return panelEl;
+	};
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _emojiData = __webpack_require__(5);
 
 	var _emojiData2 = _interopRequireDefault(_emojiData);
 
+	var _categoryOrder = __webpack_require__(6);
+
+	var _categoryOrder2 = _interopRequireDefault(_categoryOrder);
+
 	var _constant = __webpack_require__(2);
+
+	var _map = __webpack_require__(7);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	var categoryMap = {
-	  Activity: _constant.CATEGORY.ACTIVITY,
-	  Flags: _constant.CATEGORY.FLAGS,
-	  Foods: _constant.CATEGORY.FOODS,
-	  Nature: _constant.CATEGORY.NATURE,
-	  Objects: _constant.CATEGORY.OBJECTS,
-	  People: _constant.CATEGORY.PEOPLE,
-	  Places: _constant.CATEGORY.PLACES,
-	  Symbols: _constant.CATEGORY.SYMBOLS,
-	  null: _constant.CATEGORY.OTHER
-	};
 
 	var getBoolNameByImageSet = function getBoolNameByImageSet(imageSet) {
 	  switch (imageSet) {
@@ -201,12 +213,8 @@
 	  }
 	};
 
-	var sizeMap = Object.keys(_constant.SIZE).reduce(function (obj, sizeKey) {
-	  return Object.assign(obj, _defineProperty({}, _constant.SIZE[sizeKey], sizeKey));
-	}, {});
-
 	var getSizeKeyByValue = function getSizeKeyByValue(size) {
-	  return sizeMap[size];
+	  return _map.sizeMap[size];
 	};
 
 	var getEmojiClassNameByImageSetAndSize = function getEmojiClassNameByImageSetAndSize() {
@@ -244,7 +252,7 @@
 	    return emojiA['sort_order'] - emojiB['sort_order'];
 	  }).reduce(function (obj, emoji) {
 	    if (emoji[boolName]) {
-	      var category = categoryMap[emoji.category];
+	      var category = _map.categoryDataMap[emoji.category];
 	      var categoryArray = obj[category] || [];
 	      return Object.assign(obj, _defineProperty({}, category, categoryArray.concat(emoji)));
 	    } else {
@@ -264,17 +272,17 @@
 	  var emojiClassName = getEmojiClassNameByImageSetAndSize({ imageSet: imageSet, size: size });
 	  var sizeNumber = Number(getSizeKeyByValue(size));
 
-	  return '\n    <div>\n      <div>\n        ' + Object.keys(_constant.CATEGORY).map(function (categoryKey) {
-	    return '\n        <span>\n          ' + categoryKey + '\n        </span>\n        ';
-	  }).join('') + '\n      </div>\n      <div>\n        ' + Object.keys(_constant.CATEGORY).map(function (categoryKey) {
-	    return '\n        <div>\n          <div>\n            ' + categoryKey + '\n          </div>\n          <div>\n            ' + sortedEmojiData[_constant.CATEGORY[categoryKey]].map(function (emoji) {
-	      return '\n            <span class=' + emojiClassName + ' style="width: ' + sizeNumber + 'px; height: ' + sizeNumber + 'px; background-position: -' + emoji.sheet_x * sizeNumber + 'px -' + emoji.sheet_y * sizeNumber + 'px;">\n            </span>\n            ';
+	  return '\n    <div class="ep">\n      <div class="ep-categories">\n        ' + _categoryOrder2.default.map(function (category) {
+	    return '\n        <span class="ep-category" data-category-id=' + category + '>\n          ' + _map.categoryNameMap[category] + '\n        </span>\n        ';
+	  }).join('') + '\n      </div>\n      <div class="ep-emojies">\n        ' + _categoryOrder2.default.map(function (category) {
+	    return '\n        <div data-category-id=' + category + '>\n          <div>\n            ' + sortedEmojiData[category].map(function (emoji) {
+	      return '\n            <span class="ep-e ' + emojiClassName + '" style="background-position: -' + emoji.sheet_x * sizeNumber + 'px -' + emoji.sheet_y * sizeNumber + 'px">\n            </span>\n            ';
 	    }).join('') + '\n          </div>\n        </div>\n        ';
 	  }).join('') + '\n      </div>\n    </div>\n    ';
 	};
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = [
@@ -35128,7 +35136,74 @@
 	];
 
 /***/ },
-/* 5 */
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _constant = __webpack_require__(2);
+
+	exports.default = [_constant.CATEGORY.PEOPLE, _constant.CATEGORY.NATURE, _constant.CATEGORY.ACTIVITY, _constant.CATEGORY.PLACES, _constant.CATEGORY.OBJECTS, _constant.CATEGORY.SYMBOLS, _constant.CATEGORY.FLAGS, _constant.CATEGORY.OTHER];
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.sizeMap = exports.categoryNameMap = exports.categoryDataMap = undefined;
+
+	var _categoryNameMap;
+
+	var _constant = __webpack_require__(2);
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var categoryDataMap = exports.categoryDataMap = {
+	  Activity: _constant.CATEGORY.ACTIVITY,
+	  Flags: _constant.CATEGORY.FLAGS,
+	  Foods: _constant.CATEGORY.FOODS,
+	  Nature: _constant.CATEGORY.NATURE,
+	  Objects: _constant.CATEGORY.OBJECTS,
+	  People: _constant.CATEGORY.PEOPLE,
+	  Places: _constant.CATEGORY.PLACES,
+	  Symbols: _constant.CATEGORY.SYMBOLS,
+	  null: _constant.CATEGORY.OTHER
+	};
+
+	var categoryNameMap = exports.categoryNameMap = (_categoryNameMap = {}, _defineProperty(_categoryNameMap, _constant.CATEGORY.ACTIVITY, 'ACTIVITY'), _defineProperty(_categoryNameMap, _constant.CATEGORY.FLAGS, 'FLAGS'), _defineProperty(_categoryNameMap, _constant.CATEGORY.FOODS, 'FOOD & DRINK'), _defineProperty(_categoryNameMap, _constant.CATEGORY.NATURE, 'ANIMALS & NATURE'), _defineProperty(_categoryNameMap, _constant.CATEGORY.OBJECTS, 'OBJECTS'), _defineProperty(_categoryNameMap, _constant.CATEGORY.PEOPLE, 'SMILEYS & PEOPLE'), _defineProperty(_categoryNameMap, _constant.CATEGORY.PLACES, 'TRAVEL & PLACES'), _defineProperty(_categoryNameMap, _constant.CATEGORY.SYMBOLS, 'SYMBOLS'), _defineProperty(_categoryNameMap, _constant.CATEGORY.OTHER, 'OTHER'), _categoryNameMap);
+
+	var sizeMap = exports.sizeMap = {
+	  '0': 16,
+	  '1': 20,
+	  '2': 32,
+	  '4': 64
+	};
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (el, callback) {
+	  var categoriesEl = el.querySelector('.ep-categories');
+	  categoriesEl.addEventListener('click', function (e) {});
+	};
+
+/***/ },
+/* 9 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
