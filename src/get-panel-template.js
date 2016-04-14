@@ -1,17 +1,7 @@
 import emojiData from 'emoji-data';
+import categoryOrder from './category-order';
 import { IMAGE_SET, SIZE, CATEGORY } from './constant';
-
-const categoryMap = {
-  Activity: CATEGORY.ACTIVITY,
-  Flags: CATEGORY.FLAGS,
-  Foods: CATEGORY.FOODS,
-  Nature: CATEGORY.NATURE,
-  Objects: CATEGORY.OBJECTS,
-  People: CATEGORY.PEOPLE,
-  Places: CATEGORY.PLACES,
-  Symbols: CATEGORY.SYMBOLS,
-  null: CATEGORY.OTHER
-};
+import { sizeMap, categoryDataMap, categoryNameMap } from './map';
 
 const getBoolNameByImageSet = imageSet => {
   switch (imageSet) {
@@ -25,8 +15,6 @@ const getBoolNameByImageSet = imageSet => {
     return 'has_img_emojione';
   }
 };
-
-const sizeMap = Object.keys(SIZE).reduce((obj, sizeKey) => Object.assign(obj, { [SIZE[sizeKey]]: sizeKey }), {});
 
 const getSizeKeyByValue = size => {
   return sizeMap[size];
@@ -62,7 +50,7 @@ const getSortedEmojiData = imageSet => {
     .sort((emojiA, emojiB) => emojiA['sort_order'] - emojiB['sort_order'])
     .reduce((obj, emoji) => {
       if (emoji[boolName]) {
-        const category = categoryMap[emoji.category];
+        const category = categoryDataMap[emoji.category];
         const categoryArray = obj[category] || [];
         return Object.assign(obj, {
           [category]:  categoryArray.concat(emoji)
@@ -80,23 +68,20 @@ export default ({ imageSet, size } = {}) => {
   const sizeNumber = Number(getSizeKeyByValue(size));
 
   return (`
-    <div>
-      <div>
-        ${Object.keys(CATEGORY).map(categoryKey => `
-        <span>
-          ${categoryKey}
+    <div class="ep">
+      <div class="ep-categories">
+        ${categoryOrder.map(category => `
+        <span class="ep-category" data-category-id=${category}>
+          ${categoryNameMap[category]}
         </span>
         `).join('')}
       </div>
-      <div>
-        ${Object.keys(CATEGORY).map(categoryKey => `
-        <div>
+      <div class="ep-emojies">
+        ${categoryOrder.map(category => `
+        <div data-category-id=${category}>
           <div>
-            ${categoryKey}
-          </div>
-          <div>
-            ${sortedEmojiData[CATEGORY[categoryKey]].map(emoji => `
-            <span class=${emojiClassName} style="width: ${sizeNumber}px; height: ${sizeNumber}px; background-position: -${emoji.sheet_x * sizeNumber}px -${emoji.sheet_y * sizeNumber}px;">
+            ${sortedEmojiData[category].map(emoji => `
+            <span class="ep-e ${emojiClassName}" style="background-position: -${emoji.sheet_x * sizeNumber}px -${emoji.sheet_y * sizeNumber}px">
             </span>
             `).join('')}
           </div>

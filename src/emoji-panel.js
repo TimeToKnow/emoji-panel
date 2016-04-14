@@ -1,14 +1,7 @@
 import { IMAGE_SET, SIZE } from './constant';
-import getImageSetTemplate from './get-image-set-template';
+import createPanel from './create-panel';
 
 export default class EmojiPanel {
-  static createWindowImageSet(imageSet) {
-    const windowImageSet = document.createElement('div');
-    const imageSetTemplate = getImageSetTemplate(imageSet);
-    windowImageSet.innerHTML = imageSetTemplate;
-
-    return windowImageSet;
-  }
   constructor(el, { imageSet = IMAGE_SET.APPLE, size = SIZE['64'] } = {}) {
     if (__DEV__) {
       if (!(el && el.nodeType)) {
@@ -18,7 +11,7 @@ export default class EmojiPanel {
         throw new Error('`imageSet` should have one of `EmojiPanel.IMAGE_SET` values, got ${imageSet}.');
       }
     }
-    const windowImageSet = EmojiPanel.createWindowImageSet({ imageSet, size });
+    const windowImageSet = createPanel({ imageSet, size });
     el.innerHTML = '';
     el.appendChild(windowImageSet);
 
