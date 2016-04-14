@@ -5,14 +5,21 @@ export const IMAGE_SET = {
   EMOJIONE: 4
 };
 
-export const CATEGORIES = {
-  Activity: 'Activity',
-  Flags: 'Flags',
-  Foods: 'Foods',
-  Nature: 'Nature',
-  Objects: 'Objects',
-  People: 'People',
-  Places: 'Places',
-  Symbols: 'Symbols',
-  Other: null
+export const SIZE = {
+  16: 0,
+  20: 1,
+  32: 2,
+  64: 4
+};
+
+export const CATEGORY = {
+  ACTIVITY: 0,
+  FLAGS: 1,
+  FOODS: 2,
+  NATURE: 4,
+  OBJECTS: 8,
+  PEOPLE: 16,
+  PLACES: 32,
+  SYMBOLS: 64,
+  OTHER: 128
 };

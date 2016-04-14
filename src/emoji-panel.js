@@ -1,4 +1,4 @@
-import { IMAGE_SET } from './constant';
+import { IMAGE_SET, SIZE } from './constant';
 import getImageSetTemplate from './get-image-set-template';
 
 export default class EmojiPanel {
@@ -9,7 +9,7 @@ export default class EmojiPanel {
 
     return windowImageSet;
   }
-  constructor(el, { imageSet = IMAGE_SET.APPLE } = {}) {
+  constructor(el, { imageSet = IMAGE_SET.APPLE, size = SIZE['64'] } = {}) {
     if (__DEV__) {
       if (!(el && el.nodeType)) {
         throw new Error('Element must be provided to the first argument of `EmojiPanel` constructor.');
@@ -18,10 +18,16 @@ export default class EmojiPanel {
         throw new Error('`imageSet` should have one of `EmojiPanel.IMAGE_SET` values, got ${imageSet}.');
       }
     }
-    const windowImageSet = EmojiPanel.createWindowImageSet(imageSet);
+    const windowImageSet = EmojiPanel.createWindowImageSet({ imageSet, size });
     el.innerHTML = '';
     el.appendChild(windowImageSet);
+
+    // Privates
+    this._eventListeners = {
+      click: []
+    };
   }
 }
 // EmojiPanel static properties
 EmojiPanel.IMAGE_SET = IMAGE_SET;
+EmojiPanel.SIZE = SIZE;
