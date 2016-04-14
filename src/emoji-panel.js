@@ -4,25 +4,6 @@ import getImageSetTemplate from './get-image-set-template';
 let existingWindowImageSetsWrapper;
 const existingWindowImageSets = {};
 export default class EmojiWindow {
-  static getTopLeft({
-    el, x, y
-  } = {}) {
-    if (__DEV__ && el === undefined && (x === undefined || y === undefined)) {
-      throw new Error('Must provide `position` with `x` and `y`, or `el` to open from.');
-    }
-    let left = x;
-    let top = y;
-    if (left === undefined) {
-      left = el.offsetLeft + el.clientWidth;
-    }
-    if (top === undefined) {
-      top = el.offsetTop + el.clientHeight;
-    }
-    return {
-      left,
-      top
-    };
-  }
   static getWindowImageSetByImageSet(imageSet) {
     const existingWindowImageSet = existingWindowImageSets[imageSet];
     // If windowImageSet exists on object, return it,
@@ -55,7 +36,6 @@ export default class EmojiWindow {
         throw new Error('`imageSet` should have one of `EmojiWindow.IMAGE_SET` values, got ${imageSet}.');
       }
     }
-    const { left, top } = EmojiWindow.getTopLeft(position);
     const windowImageSet = EmojiWindow.getWindowImageSetByImageSet(imageSet);
   }
 }

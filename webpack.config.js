@@ -8,8 +8,8 @@ const __DEV__ = !__PROD__;
 module.exports = {
   devtool: false,
   entry: {
-    'emoji-window': [
-      './src/emoji-window.js'
+    'emoji-panel': [
+      './src/emoji-panel.js'
     ],
     example: [
       './example/example.js'
@@ -62,7 +62,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'emoji-window': path.join(__dirname, 'src', 'emoji-window.js')
+      'emoji-panel': path.join(__dirname, 'src', 'emoji-panel.js')
     }
   }
 };

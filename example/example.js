@@ -1,9 +1,5 @@
-import EmojiWindow from 'emoji-window';
+import EmojiPanel from 'emoji-panel';
 
 document.getElementById('button-example-1').addEventListener('click', e => {
-  new EmojiWindow({
-    position: {
-      el: e.target
-    }
-  });
+  new EmojiPanel();
 });

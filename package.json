@@ -1,8 +1,8 @@
 {
-  "name": "emoji-window",
+  "name": "emoji-panel",
   "version": "0.0.0",
-  "description": "Add window picker for emojis with different types of sets on your website. http://TimeToKnow.github.io/emoji-window/",
-  "main": "dist/emoji-window.js",
+  "description": "Add panel picker for emojis with different types of sets on your website. http://TimeToKnow.github.io/emoji-panel/",
+  "main": "dist/emoji-panel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TimeToKnow/emoji-window"
+    "url": "https://github.com/TimeToKnow/emoji-panel"
   },
   "keywords": [
     "emoji",
     "picker",
-    "window",
+    "panel",
     "twitter",
     "ios",
     "android",
