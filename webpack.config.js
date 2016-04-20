@@ -69,8 +69,12 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style', 'css!sass')
       },
       {
-        test: /\.png$/,
-        loader: 'url?limit=1&name=./asset/[hash].[ext]'
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css')
+      },
+      {
+        test: /\.(png|ttf)$/,
+        loader: 'url?limit=20000&name=./asset/[hash].[ext]'
       }
     ]
   },

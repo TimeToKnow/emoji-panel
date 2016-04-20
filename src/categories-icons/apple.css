@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'apple-category';
+    src: url('../src/categories-icons/apple.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.cat {
+    font-family: 'apple-category' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.cat-0:before {
+    content: "\e900";
+}
+.cat-1:before {
+    content: "\e901";
+}
+.cat-2:before {
+    content: "\e902";
+}
+.cat-4:before {
+    content: "\e903";
+}
+.cat-8:before {
+    content: "\e904";
+}
+.cat-16:before {
+    content: "\e905";
+}
+.cat-128:before {
+    content: "\e906";
+}
+.cat-64:before {
+    content: "\e907";
+}
+.cat-32:before {
+    content: "\e908";
+}

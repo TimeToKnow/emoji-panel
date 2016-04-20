@@ -71,14 +71,15 @@ export default ({ imageSet, size } = {}) => {
     <div class="ep">
       <div class="ep-categories">
         ${categoryOrder.map(category => `
-        <span class="ep-category" data-category-id=${category}>
-          ${categoryNameMap[category]}
+        <span class="ep-c" data-category-id=${category}>
+          <span class="cat cat-${category}"></span>
+          <span class="ep-c-text">${categoryNameMap[category]}</span>
         </span>
         `).join('')}
       </div>
       <div class="ep-emojies">
         ${categoryOrder.map(category => `
-        <div data-category-id=${category}>
+        <div class="ep-emojies-c" data-category-id=${category}>
           <div>
             ${sortedEmojiData[category].map(emoji => `
             <span class="ep-e ${emojiClassName}" style="background-position: -${emoji.sheet_x * sizeNumber}px -${emoji.sheet_y * sizeNumber}px">

@@ -44,8 +44,8 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(29);
-	module.exports = __webpack_require__(30);
+	__webpack_require__(30);
+	module.exports = __webpack_require__(31);
 
 
 /***/ },
@@ -75,6 +75,8 @@
 	  var imageSet = _ref$imageSet === undefined ? _constant.IMAGE_SET.APPLE : _ref$imageSet;
 	  var _ref$size = _ref.size;
 	  var size = _ref$size === undefined ? _constant.SIZE['64'] : _ref$size;
+	  var _ref$animationDuratio = _ref.animationDuration;
+	  var animationDuration = _ref$animationDuratio === undefined ? 300 : _ref$animationDuratio;
 
 	  _classCallCheck(this, EmojiPanel);
 
@@ -88,7 +90,7 @@
 	      throw new Error('`imageSet` should have one of `EmojiPanel.IMAGE_SET` values, got ${imageSet}.');
 	    }
 	  }
-	  var windowImageSet = (0, _createPanel2.default)({ imageSet: imageSet, size: size });
+	  var windowImageSet = (0, _createPanel2.default)({ imageSet: imageSet, size: size, animationDuration: animationDuration });
 	  el.innerHTML = '';
 	  el.appendChild(windowImageSet);
 
@@ -164,12 +166,13 @@
 
 	  var imageSet = _ref.imageSet;
 	  var size = _ref.size;
+	  var animationDuration = _ref.animationDuration;
 
 	  var panelEl = document.createElement('div');
 	  panelEl.setAttribute('class', 'ep-container');
 	  var panelTemplate = (0, _getPanelTemplate2.default)({ imageSet: imageSet, size: size });
 	  panelEl.innerHTML = panelTemplate;
-	  (0, _setEventsForTemplate2.default)(panelEl);
+	  (0, _setEventsForTemplate2.default)(panelEl, { animationDuration: animationDuration });
 
 	  return panelEl;
 	};
@@ -273,9 +276,9 @@
 	  var sizeNumber = Number(getSizeKeyByValue(size));
 
 	  return '\n    <div class="ep">\n      <div class="ep-categories">\n        ' + _categoryOrder2.default.map(function (category) {
-	    return '\n        <span class="ep-category" data-category-id=' + category + '>\n          ' + _map.categoryNameMap[category] + '\n        </span>\n        ';
+	    return '\n        <span class="ep-c" data-category-id=' + category + '>\n          <span class="cat cat-' + category + '"></span>\n          <span class="ep-c-text">' + _map.categoryNameMap[category] + '</span>\n        </span>\n        ';
 	  }).join('') + '\n      </div>\n      <div class="ep-emojies">\n        ' + _categoryOrder2.default.map(function (category) {
-	    return '\n        <div data-category-id=' + category + '>\n          <div>\n            ' + sortedEmojiData[category].map(function (emoji) {
+	    return '\n        <div class="ep-emojies-c" data-category-id=' + category + '>\n          <div>\n            ' + sortedEmojiData[category].map(function (emoji) {
 	      return '\n            <span class="ep-e ' + emojiClassName + '" style="background-position: -' + emoji.sheet_x * sizeNumber + 'px -' + emoji.sheet_y * sizeNumber + 'px">\n            </span>\n            ';
 	    }).join('') + '\n          </div>\n        </div>\n        ';
 	  }).join('') + '\n      </div>\n    </div>\n    ';
@@ -35196,10 +35199,76 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	var getIsElementScrollable = function getIsElementScrollable(el) {
+	  return el.clientHeight !== el.scrollHeight;
+	};
 
-	exports.default = function (el, callback) {
+	var round = function round(num) {
+	  return (num * 2).toFixed() / 2;
+	};
+
+	var scrollElementTo = function scrollElementTo(el, done) {
+	  var newScrollHeight = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+	  var scrollDuration = arguments.length <= 3 || arguments[3] === undefined ? 300 : arguments[3];
+
+	  var scrollHeight = el.scrollTop;
+	  var scrollDiff = scrollHeight - newScrollHeight;
+	  var scrollStep = Math.PI / (scrollDuration / 15);
+	  var cosParameter = scrollDiff / 2;
+	  var scrollCount = 0;
+	  var scrollMargin = void 0;
+
+	  var step = function step() {
+	    setTimeout(function () {
+	      if (el.scrollTop !== newScrollHeight) {
+	        requestAnimationFrame(step);
+	        scrollCount = scrollCount + 1;
+	        scrollMargin = round(cosParameter - cosParameter * Math.cos(scrollCount * scrollStep));
+	        el.scrollTo(0, scrollHeight - scrollMargin);
+	      } else {
+	        done();
+	      }
+	    }, 15);
+	  };
+
+	  requestAnimationFrame(step);
+	};
+
+	exports.default = function (el) {
+	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	  var animationDuration = _ref.animationDuration;
+
+	  var isMidScrollAnimation = false;
+
 	  var categoriesEl = el.querySelector('.ep-categories');
-	  categoriesEl.addEventListener('click', function (e) {});
+	  var emojiesContainer = el.querySelector('.ep-emojies');
+	  categoriesEl.addEventListener('click', function (e) {
+	    if (isMidScrollAnimation === false) {
+	      (function () {
+	        var target = e.target;
+	        if (['cat', 'ep-c-text'].map(function (className) {
+	          return target.classList.contains(className);
+	        }).some(function (v) {
+	          return v === true;
+	        })) {
+	          target = target.parentElement;
+	        }
+	        if (target.classList.contains('ep-c')) {
+	          var isElementScrollable = getIsElementScrollable(emojiesContainer);
+	          if (isElementScrollable) {
+	            var categoryId = target.dataset.categoryId;
+	            var categoryEl = emojiesContainer.querySelector('[data-category-id="' + categoryId + '"]');
+	            var categoryHeight = categoryEl.offsetTop;
+	            isMidScrollAnimation = true;
+	            scrollElementTo(emojiesContainer, function () {
+	              isMidScrollAnimation = false;
+	            }, categoryHeight, animationDuration);
+	          }
+	        }
+	      })();
+	    }
+	  });
 	};
 
 /***/ },
@@ -35223,7 +35292,8 @@
 /* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */
+/* 29 */,
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35237,7 +35307,7 @@
 	new _emojiPanel2.default(document.getElementById('panel-example-1'));
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
