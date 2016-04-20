@@ -2,7 +2,7 @@ import { IMAGE_SET, SIZE } from './constant';
 import createPanel from './create-panel';
 
 export default class EmojiPanel {
-  constructor(el, { imageSet = IMAGE_SET.APPLE, size = SIZE['64'] } = {}) {
+  constructor(el, { imageSet = IMAGE_SET.APPLE, size = SIZE['64'], animationDuration = 300 } = {}) {
     if (__DEV__) {
       if (!(el && el.nodeType)) {
         throw new Error('Element must be provided to the first argument of `EmojiPanel` constructor.');
@@ -11,7 +11,7 @@ export default class EmojiPanel {
         throw new Error('`imageSet` should have one of `EmojiPanel.IMAGE_SET` values, got ${imageSet}.');
       }
     }
-    const windowImageSet = createPanel({ imageSet, size });
+    const windowImageSet = createPanel({ imageSet, size, animationDuration });
     el.innerHTML = '';
     el.appendChild(windowImageSet);
 

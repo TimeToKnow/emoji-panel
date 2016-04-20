@@ -27,14 +27,17 @@ const scrollElementTo = (el, done, newScrollHeight = 0, scrollDuration = 300) =>
 
   requestAnimationFrame(step);
 };
-export default (el, callback) => {
+export default (el, { animationDuration } = {}) => {
   let isMidScrollAnimation = false;
 
   const categoriesEl = el.querySelector('.ep-categories');
   const emojiesContainer = el.querySelector('.ep-emojies');
   categoriesEl.addEventListener('click', e => {
     if (isMidScrollAnimation === false) {
-      const target = e.target;
+      let target = e.target;
+      if (['cat', 'ep-c-text'].map(className => target.classList.contains(className)).some(v => v === true)) {
+        target = target.parentElement;
+      }
       if (target.classList.contains('ep-c')) {
         const isElementScrollable = getIsElementScrollable(emojiesContainer);
         if (isElementScrollable) {
@@ -44,7 +47,7 @@ export default (el, callback) => {
           isMidScrollAnimation = true;
           scrollElementTo(emojiesContainer, () => {
             isMidScrollAnimation = false;
-          }, categoryHeight);
+          }, categoryHeight, animationDuration);
         }
       }
     }

@@ -1,4 +1,8 @@
-$size-categories: 20px;
+@import 'categories-icons/apple';
+
+$size-categories-icons: 32px;
+$size-categories: 40px;
+
 .ep {
   height: 100%;
 }
@@ -7,6 +11,24 @@ $size-categories: 20px;
 }
 .ep-categories {
   height: $size-categories;
+  display: flex;
+}
+.ep-c {
+  cursor: pointer;
+  flex: 1 1;
+  text-align: center;
+  font-size: $size-categories-icons;
+  color: silver;
+  opacity: 1;
+  &:hover {
+    opacity: 0.8;
+  }
+  >*{
+    vertical-align: middle;
+  }
+}
+.ep-c-text {
+  display: none;
 }
 .ep-emojies {
   position: relative;

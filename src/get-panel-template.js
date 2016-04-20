@@ -72,7 +72,8 @@ export default ({ imageSet, size } = {}) => {
       <div class="ep-categories">
         ${categoryOrder.map(category => `
         <span class="ep-c" data-category-id=${category}>
-          ${categoryNameMap[category]}
+          <span class="cat cat-${category}"></span>
+          <span class="ep-c-text">${categoryNameMap[category]}</span>
         </span>
         `).join('')}
       </div>
