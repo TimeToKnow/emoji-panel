@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports =
 Object.assign(webpackBaseConfig, {
+  devtool: 'source-map',
   entry: Object.assign({},  {
     'dist/example.min': webpackBaseConfig.entry.example, // Change location and file name to match the ones in github page
     base: [] // Hot reload will be injected here

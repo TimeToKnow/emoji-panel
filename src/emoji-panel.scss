@@ -9,8 +9,13 @@ $size-categories: 20px;
   height: $size-categories;
 }
 .ep-emojies {
+  position: relative;
   height: calc(100% - #{$size-categories});
   overflow-y: auto;
+}
+.ep-emojies-c:last-child {
+  position: absolute;
+  min-height: 100%;
 }
 .ep-e {
   display: inline-block;
