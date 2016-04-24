@@ -54,15 +54,19 @@ module.exports = {
     ],
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.ahtml.js$/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
+        loader: 'raw!absurd'
+      },
+      {
+        test: name => name.match(/\.js$/) && !name.match(/(\.ahtml|\.acss).js$/),
         include: [
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'example')
         ],
-        loader: 'babel',
-        query: {
-          presets: ['es2015']
-        }
+        loader: 'babel?presets[]=es2015'
       },
       {
         test: /\.scss$/,
@@ -71,6 +75,13 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style', 'css')
+      },
+      {
+        test: /\.acss.js$/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
+        loader: ExtractTextPlugin.extract('style', 'css!absurd')
       },
       {
         test: /\.(png|ttf)$/,

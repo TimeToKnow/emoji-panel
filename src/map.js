@@ -1,6 +1,9 @@
-import { IMAGE_SET, SIZE, CATEGORY } from './constant';
+const Constant = require('./constant');
+const IMAGE_SET = Constant.IMAGE_SET;
+const SIZE = Constant.SIZE;
+const CATEGORY = Constant.CATEGORY;
 
-export const categoryDataMap = {
+const categoryDataMap = {
   Activity: CATEGORY.ACTIVITY,
   Flags: CATEGORY.FLAGS,
   Foods: CATEGORY.FOODS,
@@ -8,11 +11,10 @@ export const categoryDataMap = {
   Objects: CATEGORY.OBJECTS,
   People: CATEGORY.PEOPLE,
   Places: CATEGORY.PLACES,
-  Symbols: CATEGORY.SYMBOLS,
-  null: CATEGORY.OTHER
+  Symbols: CATEGORY.SYMBOLS
 };
 
-export const categoryNameMap = {
+const categoryNameMap = {
   [CATEGORY.ACTIVITY]: 'ACTIVITY',
   [CATEGORY.FLAGS]: 'FLAGS',
   [CATEGORY.FOODS]: 'FOOD & DRINK',
@@ -20,13 +22,14 @@ export const categoryNameMap = {
   [CATEGORY.OBJECTS]: 'OBJECTS',
   [CATEGORY.PEOPLE]: 'SMILEYS & PEOPLE',
   [CATEGORY.PLACES]: 'TRAVEL & PLACES',
-  [CATEGORY.SYMBOLS]: 'SYMBOLS',
-  [CATEGORY.OTHER]: 'OTHER'
+  [CATEGORY.SYMBOLS]: 'SYMBOLS'
 };
 
-export const sizeMap = {
+const sizeMap = {
   '0': 16,
   '1': 20,
   '2': 32,
   '4': 64
 };
+
+module.exports = { categoryDataMap, categoryNameMap, sizeMap };

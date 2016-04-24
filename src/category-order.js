@@ -1,12 +1,11 @@
-import { CATEGORY } from './constant';
+const CATEGORY = require('./constant').CATEGORY;
 
-export default [
+module.exports = [
   CATEGORY.PEOPLE,
   CATEGORY.NATURE,
   CATEGORY.ACTIVITY,
   CATEGORY.PLACES,
   CATEGORY.OBJECTS,
   CATEGORY.SYMBOLS,
-  CATEGORY.FLAGS,
-  CATEGORY.OTHER
+  CATEGORY.FLAGS
 ];
