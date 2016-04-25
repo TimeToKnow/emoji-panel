@@ -6,7 +6,7 @@ $size-slide: 3px;
 
 .ep {
   height: 100%;
-  
+
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -34,7 +34,6 @@ $size-slide: 3px;
 .ep-slide {
   position: absolute;
   height: $size-slide;
-  width: 12.5%;
   will-change: margin-left;
   transition: margin-left ease-in-out;
   background-color: #93D3CC;
