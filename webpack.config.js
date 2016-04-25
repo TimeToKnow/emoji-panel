@@ -96,7 +96,7 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'src')
         ],
-        loader: 'raw!absurd'
+        loader: 'raw!html-minify!absurd'
       },
       {
         test: /\.acss.js$/,

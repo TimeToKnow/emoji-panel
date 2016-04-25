@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress && rimraf ./dist/emoji-panel-*.js",
     "start": "webpack-dev-server --port 8080 --inline --progress --colors --config ./webpack.dev.config.js",
+    "start:prod": "set NODE_ENV=production&& npm start",
     "predeploy": "set NODE_ENV=development&& npm run build && set NODE_ENV=production&& npm run build",
     "deploy": "npm run predeploy && git add dist && git add dist/* && git commit -m \"Deploy build files\" && git checkout gh-pages && git merge master && git push && git checkout master && git push"
   },
@@ -37,6 +38,7 @@
     "eslint": "^2.7.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "html-minify-loader": "^1.1.0",
     "html-webpack-plugin": "^2.15.0",
     "json-loader": "^0.5.4",
     "node-sass": "^3.4.2",

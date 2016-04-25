@@ -2,16 +2,43 @@
 
 $size-categories-icons: 32px;
 $size-categories: 40px;
+$size-slide: 3px;
 
 .ep {
   height: 100%;
+  
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
+  ::-webkit-scrollbar {
+    width: 6px!important;
+  }
+  ::-webkit-scrollbar-thumb {
+      background-color: rgba(0,0,0,.2);
+  }
+  ::-webkit-scrollbar-track {
+      background: rgba(255,255,255,.08);
+  }
 }
 .ep-container {
   height: 100%;
 }
 .ep-categories {
   height: $size-categories;
+  padding-bottom: $size-slide;
   display: flex;
+  position: relative;
+}
+.ep-slide {
+  position: absolute;
+  height: $size-slide;
+  width: 12.5%;
+  will-change: margin-left;
+  transition: margin-left ease-in-out;
+  background-color: #93D3CC;
+  bottom: 0;
 }
 .ep-c {
   cursor: pointer;
