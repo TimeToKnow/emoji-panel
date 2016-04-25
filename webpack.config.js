@@ -32,7 +32,7 @@ module.exports = {
     ],
     example: [
       './example/example.js',
-      './example/example.css'
+      './example/example.scss'
     ]
   },
   walk(path.join(__dirname, 'src', 'sets'))

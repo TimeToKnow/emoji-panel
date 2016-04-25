@@ -1,59 +1,69 @@
 body {
   background-color: #00BCD4;
   margin: 0 auto;
-  max-width: 762px; }
-
+  max-width: 762px;
+}
 html, body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 .tagline {
   position: relative;
-  margin-top: 0; }
-
+  margin-top: 0;
+}
 .tagline-text {
-  vertical-align: middle; }
-
+  vertical-align: middle;
+}
 .fork {
   position: absolute;
   top: 0;
-  right: 0; }
-
+  right: 0;
+}
 pre {
   white-space: normal;
-  margin-bottom: 0; }
-
+  margin-bottom: 0;
+}
 pre code {
-  white-space: pre; }
+  white-space: pre;
+}
 
 .example {
   background-color: rgba(255, 255, 255, 0.2);
   margin: 50px 0;
-  padding: 20px; }
+  padding: 20px;
+}
+
 
 /* Example 1 */
 #example-1 {
-  height: 400px; }
+  height: 400px;
+}
 
 /* Example 2 */
 #example-2 {
-  height: 400px; }
+  height: 400px;
+}
 
 /* Example 3 */
 #example-3-container {
-  position: relative; }
-  #example-3-container.open #example-3 {
-    visibility: visible; }
+  position: relative;
+  &.open #example-3 {
+    visibility: visible;
+  }
+}
 
 #example-3 {
   visibility: hidden;
-  border: 2px solid #00626e;
+  border: 2px solid darken(#00BCD4, 20%);
   bottom: 100%;
   position: absolute;
   height: 250px;
-  width: 350px; }
+  width: 350px;
+}
 
 /* Example 4 */
 #example-4 {
-  display: none; }
+  display: none;
+}
