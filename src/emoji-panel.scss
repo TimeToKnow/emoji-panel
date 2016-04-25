@@ -2,16 +2,43 @@
 
 $size-categories-icons: 32px;
 $size-categories: 40px;
+$size-slide: 3px;
 
 .ep {
   height: 100%;
+  
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
+  ::-webkit-scrollbar {
+    width: 6px!important;
+  }
+  ::-webkit-scrollbar-thumb {
+      background-color: rgba(0,0,0,.2);
+  }
+  ::-webkit-scrollbar-track {
+      background: rgba(255,255,255,.08);
+  }
 }
 .ep-container {
   height: 100%;
 }
 .ep-categories {
   height: $size-categories;
+  padding-bottom: $size-slide;
   display: flex;
+  position: relative;
+}
+.ep-slide {
+  position: absolute;
+  height: $size-slide;
+  width: 12.5%;
+  will-change: margin-left;
+  transition: margin-left ease-in-out;
+  background-color: #93D3CC;
+  bottom: 0;
 }
 .ep-c {
   cursor: pointer;
@@ -20,7 +47,7 @@ $size-categories: 40px;
   font-size: $size-categories-icons;
   color: silver;
   opacity: 1;
-  &:hover {
+  :hover {
     opacity: 0.8;
   }
   >*{
@@ -43,91 +70,4 @@ $size-categories: 40px;
   display: inline-block;
   margin: 6px;
   cursor: pointer;
-}
-// Apple
-.ep-e-a-16 {
-  width: 16px;
-  height: 16px;
-  background-image: url('~emoji-data/sheet_apple_16.png');
-}
-.ep-e-a-20 {
-  width: 20px;
-  height: 20px;
-  background-image: url('~emoji-data/sheet_apple_20.png');
-}
-.ep-e-a-32 {
-  width: 32px;
-  height: 32px;
-  background-image: url('~emoji-data/sheet_apple_32.png');
-}
-.ep-e-a-64 {
-  width: 64px;
-  height: 64px;
-  background-image: url('~emoji-data/sheet_apple_64.png');
-}
-
-// Emojione
-.ep-e-e-16 {
-  width: 16px;
-  height: 16px;
-  background-image: url('~emoji-data/sheet_emojione_16.png');
-}
-.ep-e-e-20 {
-  width: 20px;
-  height: 20px;
-  background-image: url('~emoji-data/sheet_emojione_20.png');
-}
-.ep-e-e-32 {
-  width: 32px;
-  height: 32px;
-  background-image: url('~emoji-data/sheet_emojione_32.png');
-}
-.ep-e-e-64 {
-  width: 64px;
-  height: 64px;
-  background-image: url('~emoji-data/sheet_emojione_64.png');
-}
-
-// Google
-.ep-e-g-16 {
-  width: 16px;
-  height: 16px;
-  background-image: url('~emoji-data/sheet_google_16.png');
-}
-.ep-e-g-20 {
-  width: 20px;
-  height: 20px;
-  background-image: url('~emoji-data/sheet_google_20.png');
-}
-.ep-e-g-32 {
-  width: 32px;
-  height: 32px;
-  background-image: url('~emoji-data/sheet_google_32.png');
-}
-.ep-e-g-64 {
-  width: 64px;
-  height: 64px;
-  background-image: url('~emoji-data/sheet_google_64.png');
-}
-
-// Twitter
-.ep-e-t-16 {
-  width: 16px;
-  height: 16px;
-  background-image: url('~emoji-data/sheet_twitter_16.png');
-}
-.ep-e-t-20 {
-  width: 20px;
-  height: 20px;
-  background-image: url('~emoji-data/sheet_twitter_20.png');
-}
-.ep-e-t-32 {
-  width: 32px;
-  height: 32px;
-  background-image: url('~emoji-data/sheet_twitter_32.png');
-}
-.ep-e-t-64 {
-  width: 64px;
-  height: 64px;
-  background-image: url('~emoji-data/sheet_twitter_64.png');
 }

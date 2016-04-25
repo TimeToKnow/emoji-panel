@@ -1,12 +1,11 @@
-import getPanelTemplate from './get-panel-template';
+import panelTemplate from './template.ahtml';
 import setEventsForTemplate from './set-events-for-template';
 
-export default ({ imageSet, size, animationDuration } = {}) => {
+export default ({ animationDuration, panelVariables, eventListeners } = {}) => {
   const panelEl = document.createElement('div');
   panelEl.setAttribute('class', 'ep-container');
-  const panelTemplate = getPanelTemplate({ imageSet, size });
   panelEl.innerHTML = panelTemplate;
-  setEventsForTemplate(panelEl, { animationDuration });
+  setEventsForTemplate(panelEl, { animationDuration, panelVariables, eventListeners });
 
   return panelEl;
 };

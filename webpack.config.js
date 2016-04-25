@@ -1,6 +1,7 @@
 'use strict';
 const webpack = require('webpack');
 const path = require('path');
+const fs =  require('fs');
 
 // Plugins
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -8,18 +9,39 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const __PROD__ = process.env.NODE_ENV === 'production';
 const __DEV__ = !__PROD__;
 
+const walk = dir => {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach(file => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(walk(filePath));
+    } else {
+      results.push(path.join(filePath));
+    }
+  });
+  return results;
+};
+
 module.exports = {
   devtool: false,
-  entry: {
+  entry: Object.assign({
     'emoji-panel': [
-      './src/emoji-panel.js',
-      './src/emoji-panel.scss'
+      './src/emoji-panel.js'
     ],
     example: [
       './example/example.js',
-      './example/example.scss'
+      './example/example.css'
     ]
   },
+  walk(path.join(__dirname, 'src', 'sets'))
+  .reduce((obj, fileName) => {
+    const entryName = 'emoji-panel-' + path.basename(fileName).replace('.acss.js', '');
+    return Object.assign(obj, {
+      [entryName]: [fileName, './src/emoji-panel.scss']
+    });
+  }, {})),
   output: {
     path: path.join(__dirname, 'dist'),
     filename: `[name]${__PROD__ ? '.min' : ''}.js`,
@@ -54,23 +76,34 @@ module.exports = {
     ],
     loaders: [
       {
-        test: /\.js$/,
+        test: name => name.match(/\.js$/) && !name.match(/(\.ahtml|\.acss).js$/),
         include: [
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'example')
         ],
-        loader: 'babel',
-        query: {
-          presets: ['es2015']
-        }
+        loader: 'babel?presets[]=es2015'
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css')
       },
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style', 'css!sass')
       },
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css')
+        test: /\.ahtml.js$/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
+        loader: 'raw!html-minify!absurd'
+      },
+      {
+        test: /\.acss.js$/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
+        loader: ExtractTextPlugin.extract('style', 'css!absurd')
       },
       {
         test: /\.(png|ttf)$/,
@@ -80,8 +113,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'emoji-panel': path.join(__dirname, 'src', 'emoji-panel.js'),
-      'emoji-panel.css': path.join(__dirname, 'src', 'emoji-panel.scss')
+      'emoji-panel': path.join(__dirname, 'src', 'emoji-panel.js')
     }
   }
 };
