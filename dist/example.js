@@ -348,13 +348,40 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	new _emojiPanel2.default(document.getElementById('panel-example-1'), { onClick: function onClick() {
-	    var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	// ***************************************
+	// Start of examples
+	// ***************************************
+	// Example 1
 
-	    var index = _ref.index;
+	new _emojiPanel2.default(document.getElementById('example-1'));
 
-	    console.log(index);
-	  } });
+	// Example 2
+	new _emojiPanel2.default(document.getElementById('example-2'), {
+	  onClick: function onClick(e) {
+	    alert(e.index); // eslint-disable-line no-alert
+	    alert(e.unified); // eslint-disable-line no-alert
+	  }
+	});
+
+	// Example 3
+	new _emojiPanel2.default(document.getElementById('example-3'));
+	document.getElementById('example-3-btn').addEventListener('click', function () {
+	  document.getElementById('example-3-container').classList.toggle('open');
+	});
+
+	// Example 4
+	new _emojiPanel2.default(document.getElementById('example-4'));
+	$('#example-4-btn').click(function (e) {
+	  $('#example-4').dialog({
+	    minWidth: 274,
+	    height: 600,
+	    width: 800
+	  });
+	});
+
+	// ***************************************
+	// End of examples
+	// ***************************************
 
 /***/ },
 
