@@ -37,11 +37,20 @@ var EmojiPanel = require('emoji-panel');
 new EmojiPanel(document.getElementById('example-1'));
         </code>
       </pre>
+      <pre>
+        <code>
+/* Must provide or limit the height of the container */
+#example-1 {
+  height: 400px
+}
+        </code>
+      </pre>
     </div>
     <div class="example">
       <div id="example-2"></div>
       <pre>
         <code>
+// Click event example
 new EmojiPanel(
   document.getElementById('example-2'), {
     onClick: e => {
@@ -58,15 +67,26 @@ new EmojiPanel(
         <button id="example-3-btn">Click me to toggle dialog</button>
         <div id="example-3"></div>
       </div>
+      <pre>
+        <code class="javascript">
+// Create the panel before opening the dialog for quick opening
+// Though lazy creation also works and is blazing fast! (3ms)
+new EmojiPanel(document.getElementById('example-3'));
+
+// Toggle dialog
+document.getElementById('example-3-btn').addEventListener('click', () => {
+  document.getElementById('example-3-container').classList.toggle('open');
+});
+        </code>
+      </pre>
     </div>
     <div class="example">
       <button id="example-4-btn">Click me to open jQuery dialog</button>
       <div id="example-4"></div>
       <pre>
         <code>
-// Create the panel before opening the dialog for quick opening
-// Though lazy creation also works and is blazing fast! (3ms)
 new EmojiPanel(document.getElementById('example-4'));
+
 $('#example-4').dialog({
   minWidth: 274,
   height: 800,
