@@ -5,7 +5,7 @@
   "main": "dist/emoji-panel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --progress",
+    "build": "webpack --progress && rimraf ./dist/emoji-panel-*.js",
     "start": "webpack-dev-server --port 8080 --inline --progress --colors --config ./webpack.dev.config.js",
     "predeploy": "set NODE_ENV=development&& npm run build && set NODE_ENV=production&& npm run build",
     "deploy": "npm run predeploy && git add dist && git add dist/* && git commit -m \"Deploy build files\" && git checkout gh-pages && git merge master && git push && git checkout master && git push"
@@ -42,6 +42,7 @@
     "node-sass": "^3.4.2",
     "path": "^0.12.7",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
