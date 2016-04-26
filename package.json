@@ -4,7 +4,7 @@
   "description": "Add panel picker for emojis with different types of sets on your website. http://TimeToKnow.github.io/emoji-panel/",
   "main": "dist/emoji-panel.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eslint .",
     "build": "webpack --progress && rimraf ./dist/emoji-panel-*.js",
     "start": "webpack-dev-server --port 8080 --inline --progress --colors --config ./webpack.dev.config.js",
     "start:prod": "set NODE_ENV=production&& npm start",
