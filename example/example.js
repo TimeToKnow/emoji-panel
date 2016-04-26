@@ -4,7 +4,10 @@ let size = '32';
 let imageSet = 'apple';
 const changeEmojiStylesheet = () => {
   const stylesheet = document.getElementById('emoji-style');
-  stylesheet.href = `dist/emoji-panel-${imageSet}-${size}.min.css`;
+  const codeEl = document.getElementById('example-0').querySelector('code');
+  const newHref = `dist/emoji-panel-${imageSet}-${size}.min.css`;
+  stylesheet.href = newHref;
+  codeEl.innerHTML = codeEl.innerHTML.replace(/dist\/emoji-panel-.*-.*.min.css/g, newHref);
 };
 document.getElementById('select-image-set').addEventListener('change', e => {
   imageSet = e.target.options[e.target.selectedIndex].value;
