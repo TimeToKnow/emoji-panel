@@ -70,6 +70,7 @@ $size-slide: 3px;
 .ep-emojies-c {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   &:last-child {
     position: absolute;
     min-height: 100%;
