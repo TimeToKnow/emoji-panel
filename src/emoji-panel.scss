@@ -62,6 +62,10 @@ $size-slide: 3px;
   position: relative;
   height: calc(100% - #{$size-categories + $size-slide});
   overflow-y: auto;
+  .ep-e {
+    margin: 6px;
+    cursor: pointer;
+  }
 }
 .ep-emojies-c {
   display: flex;
@@ -70,10 +74,4 @@ $size-slide: 3px;
     position: absolute;
     min-height: 100%;
   }
-}
-
-.ep-e {
-  display: inline-block;
-  margin: 6px;
-  cursor: pointer;
 }
