@@ -352,7 +352,10 @@
 	var imageSet = 'apple';
 	var changeEmojiStylesheet = function changeEmojiStylesheet() {
 	  var stylesheet = document.getElementById('emoji-style');
-	  stylesheet.href = 'dist/emoji-panel-' + imageSet + '-' + size + '.min.css';
+	  var codeEl = document.getElementById('example-0').querySelector('code');
+	  var newHref = 'dist/emoji-panel-' + imageSet + '-' + size + '.min.css';
+	  stylesheet.href = newHref;
+	  codeEl.innerHTML = codeEl.innerHTML.replace(/dist\/emoji-panel-.*-.*.min.css/g, newHref);
 	};
 	document.getElementById('select-image-set').addEventListener('change', function (e) {
 	  imageSet = e.target.options[e.target.selectedIndex].value;

@@ -62,18 +62,17 @@ $size-slide: 3px;
   position: relative;
   height: calc(100% - #{$size-categories + $size-slide});
   overflow-y: auto;
+  .ep-e {
+    margin: 6px;
+    cursor: pointer;
+  }
 }
 .ep-emojies-c {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   &:last-child {
     position: absolute;
     min-height: 100%;
   }
-}
-
-.ep-e {
-  display: inline-block;
-  margin: 6px;
-  cursor: pointer;
 }
