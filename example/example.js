@@ -1,10 +1,25 @@
 import EmojiPanel from 'emoji-panel';
 
+let size = '32';
+let imageSet = 'apple';
+const changeEmojiStylesheet = () => {
+  const stylesheet = document.getElementById('emoji-style');
+  stylesheet.href = `dist/emoji-panel-${imageSet}-${size}.min.css`;
+};
+document.getElementById('select-image-set').addEventListener('change', e => {
+  imageSet = e.target.options[e.target.selectedIndex].value;
+  changeEmojiStylesheet();
+});
+document.getElementById('select-size').addEventListener('change', e => {
+  size = e.target.options[e.target.selectedIndex].value;
+  changeEmojiStylesheet();
+});
+
 // ***************************************
 // Start of examples
 // ***************************************
-// Example 1
 
+// Example 1
 new EmojiPanel(document.getElementById('example-1'));
 
 // Example 2
@@ -31,6 +46,11 @@ $('#example-4-btn').click(e => {
     height: 600,
     width: 800
   });
+});
+
+// Example 5
+new EmojiPanel(document.getElementById('example-5'), {
+  animationDuration: 1000
 });
 
 // ***************************************
