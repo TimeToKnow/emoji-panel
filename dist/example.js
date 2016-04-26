@@ -348,11 +348,26 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var size = '32';
+	var imageSet = 'apple';
+	var changeEmojiStylesheet = function changeEmojiStylesheet() {
+	  var stylesheet = document.getElementById('emoji-style');
+	  stylesheet.href = 'dist/emoji-panel-' + imageSet + '-' + size + '.min.css';
+	};
+	document.getElementById('select-image-set').addEventListener('change', function (e) {
+	  imageSet = e.target.options[e.target.selectedIndex].value;
+	  changeEmojiStylesheet();
+	});
+	document.getElementById('select-size').addEventListener('change', function (e) {
+	  size = e.target.options[e.target.selectedIndex].value;
+	  changeEmojiStylesheet();
+	});
+
 	// ***************************************
 	// Start of examples
 	// ***************************************
-	// Example 1
 
+	// Example 1
 	new _emojiPanel2.default(document.getElementById('example-1'));
 
 	// Example 2
@@ -377,6 +392,11 @@
 	    height: 600,
 	    width: 800
 	  });
+	});
+
+	// Example 5
+	new _emojiPanel2.default(document.getElementById('example-5'), {
+	  animationDuration: 1000
 	});
 
 	// ***************************************
