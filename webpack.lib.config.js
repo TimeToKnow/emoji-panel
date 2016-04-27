@@ -18,7 +18,7 @@ Object.assign(webpackBaseConfig, {
     .concat(
       {
         test: /\.acss.js$/,
-        loader: ExtractTextPlugin.extract('style', 'absurd') // Without css-loader so it won't resolve file imports
+        loader: ExtractTextPlugin.extract('style', 'raw!absurd') // Without css-loader so it won't resolve file imports, raw instead
       }
     )
   })
