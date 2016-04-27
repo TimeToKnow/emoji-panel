@@ -1,12 +1,15 @@
 src/
+bin/
 dist/
 example/
 .editorconfig
 .eslintignore
 .eslintrc
-.travis
+.travis.yml
+bower.json
 index.html
 webpack.config.js
 webpack.dev.config.js
 webpack.lib.config.js
 npm-debug.log
+.npmignore
