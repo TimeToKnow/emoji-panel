@@ -1,5 +1,3 @@
-import EmojiPanel from 'emoji-panel';
-
 let size = '32';
 let imageSet = 'apple';
 const changeEmojiStylesheet = () => {

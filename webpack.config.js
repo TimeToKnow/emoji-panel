@@ -27,12 +27,10 @@ const walk = dir => {
 module.exports = {
   devtool: false,
   entry: Object.assign({
-    'emoji-panel': [
-      './src/emoji-panel.js'
-    ],
-    example: [
+    'emoji-panel': ['./src/emoji-panel.js'],
+    'example': [
       './example/example.js',
-      './example/example.scss'
+      './example/example.css'
     ]
   },
   walk(path.join(__dirname, 'src', 'sets'))
@@ -45,7 +43,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: `[name]${__PROD__ ? '.min' : ''}.js`,
-    publicPath: ''
+    publicPath: '',
+    library: 'EmojiPanel'
   },
   plugins: [
     new ExtractTextPlugin(`[name]${__PROD__ ? '.min' : ''}.css`),

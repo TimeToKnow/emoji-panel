@@ -1,7 +1,7 @@
 import { IMAGE_SET, SIZE } from './constant';
 import createPanel from './create-panel';
 
-export default class EmojiPanel {
+module.exports = class EmojiPanel {
   constructor(el, { animationDuration = 300, onClick } = {}) {
     if (__DEV__) {
       if (!(el && el.nodeType)) {
@@ -27,4 +27,4 @@ export default class EmojiPanel {
     el.innerHTML = '';
     el.appendChild(windowImageSet);
   }
-}
+};

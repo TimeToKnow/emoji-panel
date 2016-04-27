@@ -1,3 +1,4 @@
+var EmojiPanel =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -53,10 +54,6 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
 	var _constant = __webpack_require__(2);
 
 	var _createPanel = __webpack_require__(3);
@@ -67,7 +64,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var EmojiPanel = function EmojiPanel(el) {
+	module.exports = function EmojiPanel(el) {
 	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
 	  var _ref$animationDuratio = _ref.animationDuration;
@@ -100,8 +97,6 @@
 	  el.innerHTML = '';
 	  el.appendChild(windowImageSet);
 	};
-
-	exports.default = EmojiPanel;
 
 /***/ },
 /* 2 */

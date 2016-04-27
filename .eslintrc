@@ -9,7 +9,8 @@
   "globals": {
     "__DEV__": false,
     "__PROD__": false,
-    "$": false
+    "$": false,
+    "EmojiPanel": false
   },
   "rules": {
 		"comma-dangle": [2, "never"],

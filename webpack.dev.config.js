@@ -11,14 +11,10 @@ const __PROD__ = process.env.NODE_ENV === 'production';
 module.exports =
 Object.assign(webpackBaseConfig, {
   devtool: 'source-map',
-  entry: Object.assign({
-    base: [] // Hot reload will be injected here
-  },
-  Object.keys(webpackBaseConfig.entry)
-  .filter(entryName => entryName !== 'emoji-panel')
+  entry: Object.keys(webpackBaseConfig.entry)
   .reduce((obj, entryName) => Object.assign(obj, {
     [`dist/${entryName}${__PROD__ ? '' : '.min'}`]: webpackBaseConfig.entry[entryName]
-  }), {})),
+  }), {}),
   module: Object.assign(webpackBaseConfig.module, {
     loaders: webpackBaseConfig.module.loaders.map(loaderObj => {
       const loaderTestString = loaderObj.test.toString();
@@ -33,7 +29,7 @@ Object.assign(webpackBaseConfig, {
   }),
   plugins: webpackBaseConfig.plugins.concat([
     new HtmlWebpackPlugin({
-      chunks: ['base'],  // Others are added manually to `index.html`
+      chunks: [],  // All are added manually to `index.html`
       template: './index.html',
       inject: 'head'
     })
