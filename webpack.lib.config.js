@@ -13,15 +13,13 @@ Object.assign(webpackBaseConfig, {
     umdNamedDefine: true
   }),
   module: Object.assign(webpackBaseConfig.module, {
-    loaders: webpackBaseConfig.module.loaders.map(loaderObj => {
-      const loaderTestString = loaderObj.test.toString();
-      if (loaderTestString === /\.(png|ttf)$/.toString()) {
-        return Object.assign(loaderObj, {
-          loader: 'file?name=../[path][name].[ext]' // So it won't copy the file to lib folder, only point to it's own location
-        });
-      } else {
-        return loaderObj;
+    loaders: webpackBaseConfig.module.loaders
+    .filter(loaderObj => loaderObj.test.toString() !== /\.acss.js$/.toString()) // Remove loader to add it later wiht different loader
+    .concat(
+      {
+        test: /\.acss.js$/,
+        loader: ExtractTextPlugin.extract('style', 'raw!absurd') // Without css-loader so it won't resolve file imports, raw instead
       }
-    })
+    )
   })
 });
