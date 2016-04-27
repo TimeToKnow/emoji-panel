@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --port 8080 --inline --progress --colors --config ./webpack.dev.config.js",
     "start:prod": "set NODE_ENV=production&& npm start",
     "predeploy": "set NODE_ENV=development&& npm run build && npm run lib && set NODE_ENV=production&& npm run build",
-    "deploy": "git add -f dist && git add -f dist/* && node ./bin/bump.js && git checkout gh-pages && git merge master && git checkout master && git push origin master gh-pages --follow-tags && npm publish"
+    "deploy": "git add -f dist/ && node ./bin/bump.js && git checkout gh-pages && git merge master && git checkout master && git push origin master gh-pages --follow-tags && npm publish"
   },
   "repository": {
     "type": "git",
