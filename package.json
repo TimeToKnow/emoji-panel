@@ -1,6 +1,6 @@
 {
   "name": "emoji-panel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Add panel picker for emojis with different types of sets on your website. http://TimeToKnow.github.io/emoji-panel/",
   "main": "lib/emoji-panel.js",
   "scripts": {
