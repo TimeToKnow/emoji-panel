@@ -19,7 +19,7 @@ var EmojiPanel = require('emoji-panel');
 // es6
 import EmojiPanel from 'emoji-panel';
 ```
-* Create -  
+* Create  
 ``` javascript
 new EmojiPanel(element, [options])
 ```
@@ -37,7 +37,7 @@ new EmojiPanel(element, [options])
 |onClick|Function||Callback of clicking an emoji, will return object with `index` (of the [emoji-data](https://github.com/iamcal/emoji-data) array), and `unified`|
 |animationDuration|Number|300|Duration in *ms* of the animation between categories|
 
-* Example -  
+* Example  
 ``` javascript
 new EmojiPanel(document.getElementById('emoji-panel-container'), {
   onClick: function(emoji) {
