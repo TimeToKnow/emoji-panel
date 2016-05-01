@@ -6,6 +6,8 @@ $size-slide: 3px;
 
 .ep {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   user-select: none;
   -moz-user-select: none;
@@ -26,8 +28,7 @@ $size-slide: 3px;
   height: 100%;
 }
 .ep-categories {
-  height: $size-categories;
-  padding-bottom: $size-slide;
+  padding: $size-slide 0;
   display: flex;
   position: relative;
   background-color: #fff;
@@ -44,23 +45,20 @@ $size-slide: 3px;
   cursor: pointer;
   flex: 1 1;
   text-align: center;
-  font-size: $size-categories-icons;
   color: silver;
   opacity: 1;
   :hover {
     opacity: 0.8;
-  }
-  >*{
-    vertical-align: middle;
   }
 }
 .ep-c-text {
   display: none;
 }
 .ep-emojies {
+  flex: 1 1;
   background-color: #F0F0F0;
   position: relative;
-  height: calc(100% - #{$size-categories + $size-slide});
+  height: calc(100% - #{$size-categories});
   overflow-y: auto;
   .ep-e {
     margin: 6px;
