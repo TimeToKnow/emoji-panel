@@ -6,7 +6,7 @@
 Create an emoji panel by one line, no akward dependencies, no frameworks using the data from [emoji-data](https://github.com/iamcal/emoji-data).
 
 ## Demo
-[![Try it out](resouces/demo.jpg)](http://timetoknow.github.io/emoji-panel/)
+[![Try it out](https://raw.githubusercontent.com/TimeToKnow/emoji-panel/master/resources/demo.jpg)](http://timetoknow.github.io/emoji-panel/)
 
 ## Installation
 Install the package either by using `npm install emoji-panel` or `bower install emoji-panel`.

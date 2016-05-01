@@ -1,5 +1,6 @@
 src/
 bin/
+resources/
 dist/
 example/
 .editorconfig
