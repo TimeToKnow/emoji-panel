@@ -20,7 +20,7 @@ Object.assign(webpackBaseConfig, {
       const loaderTestString = loaderObj.test.toString();
       if (loaderTestString === /\.(png|ttf)$/.toString()) {
         return Object.assign(loaderObj, {
-          loader: 'url?limit=20000&name=/[hash].[ext]' // Changed to absolute path because css will try to loader assets from url
+          loader: 'file?name=/[hash].[ext]' // Changed to absolute path because css will try to loader assets from url
         });
       } else {
         return loaderObj;

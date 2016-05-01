@@ -52,6 +52,15 @@ module.exports = (api, imageSet, size) => {
   const sizeNumber = Number(getSizeKeyByValue(size));
   const backgroundImageFileLocation = getImageFileLocation(imageSet, size);
   api.add(Object.assign({
+    '.ep': {
+      'min-width': categoryOrder.length * sizeNumber + 'px'
+    },
+    '.ep-categories': {
+      'font-size': sizeNumber + 'px'
+    },
+    '.ep-c': {
+      'height': sizeNumber + 'px'
+    },
     '.ep-e': {
       width: sizeNumber + 'px',
       height: sizeNumber + 'px',
@@ -59,9 +68,6 @@ module.exports = (api, imageSet, size) => {
     },
     '.ep-slide': {
       width: `${100 / categoryOrder.length}%`
-    },
-    '.ep': {
-      'min-width': categoryOrder.length * 32 + 'px'
     }
   }, categoryOrder.reduce((catObj, category) => Object.assign(catObj,
     emojiData[category].reduce((emojiObj, emoji) => Object.assign(emojiObj, {
