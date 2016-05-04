@@ -1,0 +1,8 @@
+{
+  "ecmaFeatures": {
+    "modules": false
+  },
+  "rules": {
+	   "no-console": 0
+   }
+}

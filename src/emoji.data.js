@@ -1,4 +1,4 @@
-const emojiData = require('emoji-data');
+const emojiData = require('../emoji-data');
 const categoryDataMap = require('./map').categoryDataMap;
 
 const sortedEmojiData = emojiData

@@ -106,7 +106,7 @@ module.exports = {
       },
       {
         test: /\.(png|ttf)$/,
-        loader: 'file?name=./asset/[hash].[ext]'
+        loader: 'file?name=./asset/[name].[ext]'
       }
     ]
   },

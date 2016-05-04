@@ -29,7 +29,7 @@ const getImageFileLocation = (imageSet, size) => {
     imageSetStr = 'emojione';
     break;
   }
-  return `~emoji-data/sheet_${imageSetStr}_${sizeStr}.png`;
+  return `../../emoji-data/sheet_${imageSetStr}_${sizeStr}.png`;
 };
 
 const getBoolNameByImageSet = imageSet => {
