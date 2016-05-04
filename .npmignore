@@ -1,8 +1,10 @@
 src/
 bin/
+!bin/install.js
 resources/
 dist/
 example/
+emoji-data/
 .editorconfig
 .eslintignore
 .eslintrc

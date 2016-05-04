@@ -14,11 +14,12 @@ Object.assign(webpackBaseConfig, {
   }),
   module: Object.assign(webpackBaseConfig.module, {
     loaders: webpackBaseConfig.module.loaders
-    .filter(loaderObj => loaderObj.test.toString() !== /\.acss.js$/.toString()) // Remove loader to add it later wiht different loader
+    .filter(loaderObj => loaderObj.test.toString() !== /\.acss.js$/.toString()) // Remove loader to add it later with different loader
     .concat(
       {
         test: /\.acss.js$/,
-        loader: ExtractTextPlugin.extract('style', 'raw!absurd') // Without css-loader so it won't resolve file imports, raw instead
+        // Without css-loader so it won't resolve file imports, raw instead, and replace emoji-data imports location
+        loader: ExtractTextPlugin.extract('style', 'raw!replace?flags=g&regex=\.\.\/\.\.\/emoji-data&sub=\.\.\/emoji-data!absurd')
       }
     )
   })
