@@ -10,7 +10,7 @@ fs.access(emojiDataPackageLocation, fs.F_OK, err => {
     ghdownload({
       user: 'iamcal',
       repo: 'emoji-data',
-      ref: 'master' // Waiting for pull request and then change to 'v2.4.1'
+      ref: 'v2.4.1'
     }, emojiDataPackageLocation)
     .on('dir', dir => {
       console.log(dir);
