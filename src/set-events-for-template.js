@@ -1,4 +1,3 @@
-// import emojiData from 'emoji-data';
 import categoryOrder from './category-order';
 import { CATEGORY } from './constant';
 

@@ -1,6 +1,5 @@
 src/
 bin/
-!bin/install.js
 resources/
 dist/
 example/

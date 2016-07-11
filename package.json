@@ -4,7 +4,6 @@
   "description": "Add panel picker for emojis with different types of sets on your website. http://TimeToKnow.github.io/emoji-panel/",
   "main": "lib/emoji-panel.js",
   "scripts": {
-    "postinstall": "node ./bin/install.js",
     "test": "eslint .",
     "lib": "webpack --progress --config ./webpack.lib.config.js && rimraf ./lib/emoji-panel-*.js",
     "build": "webpack --progress && rimraf ./dist/emoji-panel-*.js",
@@ -30,8 +29,7 @@
   "author": "unimonkiez",
   "license": "MIT",
   "dependencies": {
-    "github-download": "^0.5.0",
-    "path": "^0.12.7"
+    "emoji-datasource": "^2.4.4"
   },
   "devDependencies": {
     "absurd": "^0.3.34",
@@ -47,7 +45,8 @@
     "html-minify-loader": "^1.1.0",
     "html-webpack-plugin": "^2.15.0",
     "json-loader": "^0.5.4",
-    "node-sass": "^3.4.2",
+    "node-sass": "^3.8.0",
+    "path": "^0.12.7",
     "raw-loader": "^0.5.1",
     "replace-loader": "^0.1.0",
     "rimraf": "^2.5.2",
