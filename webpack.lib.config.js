@@ -9,6 +9,7 @@ module.exports =
 Object.assign(webpackBaseConfig, {
   output: Object.assign(webpackBaseConfig.output, {
     path: path.join(__dirname, 'lib'),
+    publicPath: 'lib/',
     libraryTarget: 'umd',
     umdNamedDefine: true
   }),
@@ -18,8 +19,8 @@ Object.assign(webpackBaseConfig, {
     .concat(
       {
         test: /\.acss.js$/,
-        // Without css-loader so it won't resolve file imports, raw instead, and replace emoji-data imports location
-        loader: ExtractTextPlugin.extract('style', 'raw!replace?flags=g&regex=\.\.\/\.\.\/emoji-data&sub=\.\.\/emoji-data!absurd')
+        // Without css-loader so it won't resolve file imports, raw instead, and replace emoji-datasource imports location (in `node_modules`)
+        loader: ExtractTextPlugin.extract('style', 'raw!replace?flags=g&regex=~emoji-datasource&sub=\.\.\/\.\.\/emoji-datasource!absurd')
       }
     )
   })
