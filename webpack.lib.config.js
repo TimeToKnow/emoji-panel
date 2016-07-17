@@ -9,7 +9,6 @@ module.exports =
 Object.assign(webpackBaseConfig, {
   output: Object.assign(webpackBaseConfig.output, {
     path: path.join(__dirname, 'lib'),
-    publicPath: 'lib/',
     libraryTarget: 'umd',
     umdNamedDefine: true
   }),
