@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - '6'
 script:
-  - npm lint
+  - npm run lint
   - npm run test:lcov
 after_success:
   - if [[ $TRAVIS_BRANCH" == "master" ]] ; then cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose; fi
