@@ -111,6 +111,7 @@ module.exports = {
     ]
   },
   resolve: {
+    root: path.resolve(__dirname),
     alias: {
       'emoji-panel': path.join(__dirname, 'src', 'emoji-panel.js')
     }

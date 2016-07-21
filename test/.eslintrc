@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": false,
+    "jasmine": true
+  },
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "rules": {
+    "strict": [2, "never"],
+    "no-console": 2
+  }
+}
