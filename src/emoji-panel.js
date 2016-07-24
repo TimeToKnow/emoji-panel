@@ -15,12 +15,10 @@ module.exports = class EmojiPanel {
       }
     }
     // Privates
-    this._panelVariables = {};
     this._eventListeners = { onClick };
 
     const windowImageSet = createPanel({
       animationDuration,
-      panelVariables: this._panelVariables,
       eventListeners: this._eventListeners
     });
 

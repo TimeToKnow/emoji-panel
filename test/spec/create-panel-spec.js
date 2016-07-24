@@ -1,5 +1,4 @@
 import createPanelInjector from 'inject!src/create-panel';
-import bla from 'src/create-panel';
 
 describe('createPanel', () => {
   let setEventsForTemplateSpy;

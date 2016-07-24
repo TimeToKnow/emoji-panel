@@ -40,8 +40,10 @@ const slideToCategory = (panelVariables, slideEl, categoryId) => {
   }
 };
 
-export default (el, { animationDuration, panelVariables, eventListeners } = {}) => {
-  let isMidScrollAnimation = false;
+export default (el, { animationDuration, eventListeners } = {}) => {
+  const panelVariables = {
+    isMidScrollAnimation: false
+  };
 
   const categoriesEl = el.querySelector('.ep-categories');
   const slideEl = el.querySelector('.ep-slide');
@@ -61,7 +63,7 @@ export default (el, { animationDuration, panelVariables, eventListeners } = {}) 
   };
 
   categoriesEl.addEventListener('click', e => {
-    if (isMidScrollAnimation === false) {
+    if (panelVariables.isMidScrollAnimation === false) {
       let target = e.target;
       if (['cat', 'ep-c-text'].map(className => target.classList.contains(className)).some(v => v === true)) {
         target = target.parentElement;
@@ -73,11 +75,11 @@ export default (el, { animationDuration, panelVariables, eventListeners } = {}) 
           const categoryEl = emojiesContainer.querySelector(`[data-category-id="${categoryId}"]`);
           const categoryHeight = categoryEl.offsetTop;
 
-          isMidScrollAnimation = true;
+          panelVariables.isMidScrollAnimation = true;
           // Remove scroll event listener for better performance
           emojiesContainer.removeEventListener('scroll', scrollListener);
           scrollElementTo(emojiesContainer, () => {
-            isMidScrollAnimation = false;
+            panelVariables.isMidScrollAnimation = false;
             // Readd scroll event listener after javascript animation has finished
             emojiesContainer.addEventListener('scroll', scrollListener);
           }, categoryHeight, animationDuration);
