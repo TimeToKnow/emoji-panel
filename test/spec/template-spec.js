@@ -50,7 +50,7 @@ describe('template.ahtml returns a function that produces html', () => {
         add: htmlObject => {
           const categoriesContainerChildren = htmlObject['div[class="ep"]']['div[class="ep-categories"]'];
           const categoriesSpansOnly = categoriesContainerChildren[1]; // First index is slider
-          const categoriesSpanNamesOnly = Object.keys(categoriesSpansOnly)
+          const categoriesSpanNamesOnly = Object.keys(categoriesSpansOnly);
           const categoriesValuesFromSpans = categoriesSpanNamesOnly.map(spanElement => {
             expect(spanElement).toEqual(jasmine.stringMatching(/^span\[class="ep-c" data-category-id="(\d{1,})"\]$/));
             const categoryStringValue = spanElement.match(/^span\[class="ep-c" data-category-id="(\d{1,})"\]$/)[1];
