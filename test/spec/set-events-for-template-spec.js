@@ -128,10 +128,11 @@ describe('`set-events-for-template`', () => {
           target: catEl
         });
         expect(emojiesContainerEl.removeEventListener).toHaveBeenCalledTimes(1);
+        expect(emojiesContainerEl.addEventListener).not.toHaveBeenCalled();
         fireScrollToDone(); // Animation end
         expect(emojiesContainerEl.addEventListener).toHaveBeenCalledTimes(1);
       });
-      it('will not call `slideToCategory` and `scrollElementTo` twice in a row (if clicks before animation ends)', () => {
+      it('will not call `slideToCategory` and `scrollElementTo` twice (or more) in a row (if clicks before animation ends)', () => {
         const catEl = document.createElement('span');
         catEl.setAttribute('class', 'ep-c');
         catEl.setAttribute('data-category-id', '2');
@@ -145,16 +146,18 @@ describe('`set-events-for-template`', () => {
         expect(scrollElementToSpy).toHaveBeenCalledTimes(1);
         expect(slideToCategorySpy).toHaveBeenCalledTimes(1);
       });
-      it('will not call `slideToCategory` and `scrollElementTo` twice in a row (if clicks before animation ends)', () => {
+      it('will call `slideToCategory` and `scrollElementTo` with currect parameters', () => {
         const catEl = document.createElement('span');
         catEl.setAttribute('class', 'ep-c');
-        catEl.setAttribute('data-category-id', '2');
-        spyOn(emojiesContainerEl, 'querySelector').and.returnValue({ offsetTop: 200 });
+        const categoryId = 2;
+        catEl.setAttribute('data-category-id', categoryId);
+        const newOffset = 200;
+        spyOn(emojiesContainerEl, 'querySelector').and.returnValue({ offsetTop: newOffset });
         fireEvent({
           target: catEl
         });
-        expect(scrollElementToSpy).toHaveBeenCalledWith(emojiesContainerEl, jasmine.any(Function), 200, animationDuration);
-        expect(slideToCategorySpy).toHaveBeenCalledWith(jasmine.any(Object), slideEl, 2);
+        expect(scrollElementToSpy).toHaveBeenCalledWith(emojiesContainerEl, jasmine.any(Function), newOffset, animationDuration);
+        expect(slideToCategorySpy).toHaveBeenCalledWith(jasmine.any(Object), slideEl, categoryId);
       });
     });
   });
