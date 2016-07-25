@@ -5,5 +5,5 @@ script:
   - npm run lint
   - npm run test:lcov
 after_success:
-  - if [[ $TRAVIS_BRANCH" == "master" ]] ; then cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ] ; then cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose; fi
   - rm -rf ./coverage
