@@ -76,10 +76,6 @@ module.exports = {
     loaders: [
       {
         test: name => name.match(/\.js$/) && !name.match(/(\.ahtml|\.acss).js$/),
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'example')
-        ],
         loader: 'babel?presets[]=es2015'
       },
       {

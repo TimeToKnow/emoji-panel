@@ -1,9 +1,11 @@
-import set from 'src/set';
-
-import emojiData from 'src/emoji-data';
+import setInjector from 'inject!src/set';
+import emojiDataMock from 'test/mock/emoji-data';
 import categoryOrder from 'src/category-order';
 import { IMAGE_SET, SIZE } from 'src/constant';
 import Map from 'src/map';
+const set = setInjector({
+  './emoji-data': emojiDataMock
+});
 
 describe('set function', () => {
   it('calls `api.add` once with css object', () => {
@@ -11,10 +13,10 @@ describe('set function', () => {
     spyOn(api, 'add').and.callFake(obj => {
 
       // flatten emoji-data object array to single array, filter out categories not in `categoryOrder`
-      const emojiesToAddToCss = Object.keys(emojiData).reduce((arr, catStr) => {
+      const emojiesToAddToCss = Object.keys(emojiDataMock).reduce((arr, catStr) => {
         const cat = Number(catStr);
         if (categoryOrder.indexOf(cat) !== -1) {
-          return arr.concat(emojiData[cat]);
+          return arr.concat(emojiDataMock[cat]);
         } else {
           // Filter out categories not in `categoryOrder`
           return arr;

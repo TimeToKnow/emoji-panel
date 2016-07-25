@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 // Disabling `no-undef` because we are using here require.context which requires files dynamically, instead of regular ES6 imports
 /* eslint-disable no-undef */
 

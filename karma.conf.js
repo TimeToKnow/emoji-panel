@@ -48,8 +48,8 @@ module.exports = function karmaConfig(config) {
         }
       },
       // Override `module` in `webpackConfig` only if coverage is produced
-      module: Object.assign(webpackConfig.module, isCoverage ? {
-        preLoaders: webpackConfig.module.preLoaders.concat([
+      module: Object.assign(webpackConfig.module, {
+        preLoaders: webpackConfig.module.preLoaders.concat(isCoverage ? [
           { // `isparta` all the code We want to be in the coverage report
             test: /\.js$/,
             include: [
@@ -65,10 +65,15 @@ module.exports = function karmaConfig(config) {
             ],
             loader: 'babel?presets[]=es2015'
           }
-        ]),
+        ] : []),
         // Exclude js loaders from `loaders` because they are set in preLoaders
-        loaders: webpackConfig.module.loaders.filter(loaderObj => (typeof loaderObj.test !== 'function' && loaderObj.test.toString().indexOf('.js') === -1))
-      } : {})
+        loaders: webpackConfig.module.loaders
+          .filter(loaderObj => (typeof loaderObj.test !== 'function' && loaderObj.test.toString().indexOf('.js') === -1))
+          .concat(isCoverage ? [] : [{
+            test: /\.js$/,
+            loader: 'babel?presets[]=es2015'
+          }])
+      })
     }),
     webpackMiddleware: {
       noInfo: true
