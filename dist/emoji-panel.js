@@ -85,12 +85,10 @@ var EmojiPanel =
 	    }
 	  }
 	  // Privates
-	  this._panelVariables = {};
 	  this._eventListeners = { onClick: onClick };
 
 	  var windowImageSet = (0, _createPanel2.default)({
 	    animationDuration: animationDuration,
-	    panelVariables: this._panelVariables,
 	    eventListeners: this._eventListeners
 	  });
 
@@ -151,17 +149,11 @@ var EmojiPanel =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = function () {
-	  var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-	  var animationDuration = _ref.animationDuration;
-	  var panelVariables = _ref.panelVariables;
-	  var eventListeners = _ref.eventListeners;
-
+	exports.default = function (options) {
 	  var panelEl = document.createElement('div');
 	  panelEl.setAttribute('class', 'ep-container');
 	  panelEl.innerHTML = _template2.default;
-	  (0, _setEventsForTemplate2.default)(panelEl, { animationDuration: animationDuration, panelVariables: panelVariables, eventListeners: eventListeners });
+	  (0, _setEventsForTemplate2.default)(panelEl, options);
 
 	  return panelEl;
 	};
@@ -182,7 +174,96 @@ var EmojiPanel =
 	  value: true
 	});
 
-	var _categoryOrder = __webpack_require__(6);
+	var _setEventsForTemplateHelpers = __webpack_require__(6);
+
+	exports.default = function (el) {
+	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	  var animationDuration = _ref.animationDuration;
+	  var eventListeners = _ref.eventListeners;
+
+	  var panelVariables = {
+	    isMidScrollAnimation: false
+	  };
+
+	  var categoriesEl = el.querySelector('.ep-categories');
+	  var slideEl = el.querySelector('.ep-slide');
+	  var emojiesContainerEl = el.querySelector('.ep-emojies');
+
+	  // Set styles
+	  slideEl.style.transitionDuration = animationDuration + 'ms';
+
+	  var scrollListener = function scrollListener() {
+	    var scrollHeight = emojiesContainerEl.scrollTop;
+	    var emojiesContainerElChildren = Array.from(emojiesContainerEl.children);
+	    var lastVisibleContainerChild = emojiesContainerElChildren.find(function (node) {
+	      return scrollHeight >= node.offsetTop && (!node.nextElementSibling || scrollHeight < node.nextElementSibling.offsetTop);
+	    });
+
+	    var categoryId = Number(lastVisibleContainerChild.dataset.categoryId);
+	    (0, _setEventsForTemplateHelpers.slideToCategory)(panelVariables, slideEl, categoryId);
+	  };
+
+	  categoriesEl.addEventListener('click', function (e) {
+	    if (panelVariables.isMidScrollAnimation === false) {
+	      (function () {
+	        var target = e.target;
+	        if (['cat', 'ep-c-text'].map(function (className) {
+	          return target.classList.contains(className);
+	        }).some(function (v) {
+	          return v === true;
+	        })) {
+	          target = target.parentElement;
+	        }
+	        if (target.classList.contains('ep-c')) {
+	          var isElementScrollable = (0, _setEventsForTemplateHelpers.getIsElementScrollable)(emojiesContainerEl);
+	          if (isElementScrollable) {
+	            var categoryId = Number(target.dataset.categoryId);
+	            var categoryEl = emojiesContainerEl.querySelector('[data-category-id="' + categoryId + '"]');
+	            var categoryHeight = categoryEl.offsetTop;
+
+	            panelVariables.isMidScrollAnimation = true;
+	            // Remove scroll event listener for better performance
+	            emojiesContainerEl.removeEventListener('scroll', scrollListener);
+	            (0, _setEventsForTemplateHelpers.scrollElementTo)(emojiesContainerEl, function () {
+	              panelVariables.isMidScrollAnimation = false;
+	              // Readd scroll event listener after javascript animation has finished
+	              emojiesContainerEl.addEventListener('scroll', scrollListener);
+	            }, categoryHeight, animationDuration);
+
+	            (0, _setEventsForTemplateHelpers.slideToCategory)(panelVariables, slideEl, categoryId);
+	          }
+	        }
+	      })();
+	    }
+	  });
+
+	  emojiesContainerEl.addEventListener('scroll', scrollListener);
+
+	  if (eventListeners.onClick) {
+	    emojiesContainerEl.addEventListener('click', function (e) {
+	      var target = e.target;
+	      if (target.classList.contains('ep-e')) {
+	        var index = Number(target.dataset.index);
+	        var unified = target.dataset.unified;
+	        eventListeners.onClick({ index: index, unified: unified });
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.slideToCategory = exports.scrollElementTo = exports.round = exports.getIsElementScrollable = undefined;
+
+	var _categoryOrder = __webpack_require__(7);
 
 	var _categoryOrder2 = _interopRequireDefault(_categoryOrder);
 
@@ -190,15 +271,15 @@ var EmojiPanel =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var getIsElementScrollable = function getIsElementScrollable(el) {
+	var getIsElementScrollable = exports.getIsElementScrollable = function getIsElementScrollable(el) {
 	  return el.clientHeight !== el.scrollHeight;
 	};
 
-	var round = function round(num) {
+	var round = exports.round = function round(num) {
 	  return (num * 2).toFixed() / 2;
 	};
 
-	var scrollElementTo = function scrollElementTo(el, done) {
+	var scrollElementTo = exports.scrollElementTo = function scrollElementTo(el, done) {
 	  var newScrollHeight = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
 	  var scrollDuration = arguments.length <= 3 || arguments[3] === undefined ? 300 : arguments[3];
 
@@ -226,7 +307,7 @@ var EmojiPanel =
 	};
 
 	var marginParam = 100 / _categoryOrder2.default.length;
-	var slideToCategory = function slideToCategory(panelVariables, slideEl, categoryId) {
+	var slideToCategory = exports.slideToCategory = function slideToCategory(panelVariables, slideEl, categoryId) {
 	  if (panelVariables.selectedCategoryId !== categoryId) {
 	    panelVariables.selectedCategoryId = categoryId;
 	    var selectedCategoryIndex = _categoryOrder2.default.indexOf(categoryId);
@@ -234,83 +315,8 @@ var EmojiPanel =
 	  }
 	};
 
-	exports.default = function (el) {
-	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	  var animationDuration = _ref.animationDuration;
-	  var panelVariables = _ref.panelVariables;
-	  var eventListeners = _ref.eventListeners;
-
-	  var isMidScrollAnimation = false;
-
-	  var categoriesEl = el.querySelector('.ep-categories');
-	  var slideEl = el.querySelector('.ep-slide');
-	  var emojiesContainer = el.querySelector('.ep-emojies');
-
-	  // Set styles
-	  slideEl.style.transitionDuration = animationDuration + 'ms';
-
-	  var scrollListener = function scrollListener() {
-	    var scrollHeight = emojiesContainer.scrollTop;
-	    var emojiesContainerChildren = Array.from(emojiesContainer.children);
-	    var lastVisibleContainerChild = emojiesContainerChildren.find(function (node) {
-	      return scrollHeight >= node.offsetTop && (!node.nextElementSibling || scrollHeight < node.nextElementSibling.offsetTop);
-	    });
-
-	    var categoryId = Number(lastVisibleContainerChild.dataset.categoryId);
-	    slideToCategory(panelVariables, slideEl, categoryId);
-	  };
-
-	  categoriesEl.addEventListener('click', function (e) {
-	    if (isMidScrollAnimation === false) {
-	      (function () {
-	        var target = e.target;
-	        if (['cat', 'ep-c-text'].map(function (className) {
-	          return target.classList.contains(className);
-	        }).some(function (v) {
-	          return v === true;
-	        })) {
-	          target = target.parentElement;
-	        }
-	        if (target.classList.contains('ep-c')) {
-	          var isElementScrollable = getIsElementScrollable(emojiesContainer);
-	          if (isElementScrollable) {
-	            var categoryId = Number(target.dataset.categoryId);
-	            var categoryEl = emojiesContainer.querySelector('[data-category-id="' + categoryId + '"]');
-	            var categoryHeight = categoryEl.offsetTop;
-
-	            isMidScrollAnimation = true;
-	            // Remove scroll event listener for better performance
-	            emojiesContainer.removeEventListener('scroll', scrollListener);
-	            scrollElementTo(emojiesContainer, function () {
-	              isMidScrollAnimation = false;
-	              // Readd scroll event listener after javascript animation has finished
-	              emojiesContainer.addEventListener('scroll', scrollListener);
-	            }, categoryHeight, animationDuration);
-
-	            slideToCategory(panelVariables, slideEl, categoryId);
-	          }
-	        }
-	      })();
-	    }
-	  });
-
-	  emojiesContainer.addEventListener('scroll', scrollListener);
-
-	  if (eventListeners.onClick) {
-	    emojiesContainer.addEventListener('click', function (e) {
-	      var target = e.target;
-	      if (target.classList.contains('ep-e')) {
-	        var index = Number(target.dataset.index);
-	        var unified = target.dataset.unified;
-	        eventListeners.onClick({ index: index, unified: unified });
-	      }
-	    });
-	  }
-	};
-
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
