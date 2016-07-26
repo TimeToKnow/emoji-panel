@@ -1,15 +1,9 @@
 language: node_js
 node_js:
-  - '4'
-addons:
-  apt:
-    packages:
-      - xvfb
-before_script:
-  - export DISPLAY=:99.0
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm test
-install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm install
+  - '6'
+script:
+  - npm run lint
+  - npm run test:lcov
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ] ; then cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose; fi
+  - rm -rf ./coverage

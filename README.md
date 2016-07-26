@@ -1,5 +1,6 @@
 # Emoji panel
 [![Build Status](https://travis-ci.org/TimeToKnow/emoji-panel.svg)](https://travis-ci.org/TimeToKnow/emoji-panel)
+[![Coverage Status](https://coveralls.io/repos/github/TimeToKnow/emoji-panel/badge.svg?branch=master)](https://coveralls.io/github/TimeToKnow/emoji-panel?branch=master)
 [![npm version](https://badge.fury.io/js/emoji-panel.svg)](https://badge.fury.io/js/emoji-panel)  
 > Blazing fast emoji panel (3ms creation)
 

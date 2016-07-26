@@ -1,4 +1,4 @@
-const emojiData = require('./emoji.data');
+const emojiData = require('./emoji-data');
 const categoryOrder = require('./category-order');
 const Constant = require('./constant');
 const Map = require('./map');
