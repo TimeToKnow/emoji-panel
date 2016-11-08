@@ -1,4 +1,4 @@
-import { getIsElementScrollable, round, scrollElementTo, slideToCategory } from 'src/set-events-for-template-helpers';
+import { getIsElementScrollable, scrollElementTo, slideToCategory } from 'src/set-events-for-template-helpers';
 import categoryOrder from 'src/category-order';
 import { CATEGORY } from 'src/constant';
 
@@ -15,25 +15,6 @@ describe('`set-events-for-template-helpers`', () => {
         clientHeight: 200,
         scrollHeight: 12
       })).toBeTruthy();
-    });
-  });
-  describe('has `round` function', () => {
-    it('that rounds up numbers', () => {
-      expect(round(1.77)).toBe(2);
-    });
-    it('that rounds down numbers', () => {
-      expect(round(1.12)).toBe(1);
-    });
-    describe('that rounds to half', () => {
-      it('when is half', () => {
-        expect(round(1.5)).toBe(1.5);
-      });
-      it('when is bellow half but closer to half than whole number', () => {
-        expect(round(1.32)).toBe(1.5);
-      });
-      it('when is higher than half but closer to half than whole number', () => {
-        expect(round(1.72)).toBe(1.5);
-      });
     });
   });
   describe('has `slideToCategory` function', () => {
@@ -79,13 +60,10 @@ describe('`set-events-for-template-helpers`', () => {
       }
     };
     /**
-     * beforeEach sets resets array to empty, and each time raf or setTimeout is called, adds them to the array to be run by `runFuncArray`
+     * beforeEach sets resets array to empty, and each time raf called, adds them to the array to be run by `runFuncArray`
      */
     beforeEach(() => {
       funcArray = [];
-      spyOn(window, 'setTimeout').and.callFake(fn => {
-        funcArray.push(fn);
-      });
       spyOn(window, 'requestAnimationFrame').and.callFake(fn => {
         funcArray.push(fn);
       });
@@ -100,12 +78,22 @@ describe('`set-events-for-template-helpers`', () => {
     });
     it('step function is called every 15ms', () => {
       const animationTime = 310;
-      const timesStepShouldBeCalled = Math.ceil(animationTime / 15);
+      const timesStepShouldBeCalled = Math.floor(animationTime / 15) + 1;// Plus one for initial `requestAnimationFrame`
+      spyOn(Date, 'now').and.returnValues(...Array.from({ length: timesStepShouldBeCalled }).map((_, index) => 15 * index));
+
+      let doneCalled = false;
       scrollElementTo({
         scrollTop: 0
-      }, () => {}, animationTime);
+      }, () => {
+        doneCalled = true;
+      }, 1000, animationTime);
       runFuncArray();
-      expect(window.setTimeout).toHaveBeenCalledTimes(timesStepShouldBeCalled);
+
+      if (doneCalled) {
+        expect(window.requestAnimationFrame).toHaveBeenCalledTimes(timesStepShouldBeCalled - 1);
+      } else {
+        fail('Expected done callback to be called');
+      }
     });
   });
 });

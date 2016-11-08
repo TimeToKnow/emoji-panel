@@ -65,11 +65,10 @@ var EmojiPanel =
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	module.exports = function EmojiPanel(el) {
-	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	  var _ref$animationDuratio = _ref.animationDuration;
-	  var animationDuration = _ref$animationDuratio === undefined ? 300 : _ref$animationDuratio;
-	  var onClick = _ref.onClick;
+	  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+	      _ref$animationDuratio = _ref.animationDuration,
+	      animationDuration = _ref$animationDuratio === undefined ? 300 : _ref$animationDuratio,
+	      onClick = _ref.onClick;
 
 	  _classCallCheck(this, EmojiPanel);
 
@@ -177,10 +176,9 @@ var EmojiPanel =
 	var _setEventsForTemplateHelpers = __webpack_require__(6);
 
 	exports.default = function (el) {
-	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	  var animationDuration = _ref.animationDuration;
-	  var eventListeners = _ref.eventListeners;
+	  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+	      animationDuration = _ref.animationDuration,
+	      eventListeners = _ref.eventListeners;
 
 	  var panelVariables = {
 	    isMidScrollAnimation: false
@@ -261,7 +259,7 @@ var EmojiPanel =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.slideToCategory = exports.scrollElementTo = exports.round = exports.getIsElementScrollable = undefined;
+	exports.slideToCategory = exports.scrollElementTo = exports.getIsElementScrollable = undefined;
 
 	var _categoryOrder = __webpack_require__(7);
 
@@ -275,35 +273,48 @@ var EmojiPanel =
 	  return el.clientHeight !== el.scrollHeight;
 	};
 
-	var round = exports.round = function round(num) {
-	  return (num * 2).toFixed() / 2;
-	};
-
 	var scrollElementTo = exports.scrollElementTo = function scrollElementTo(el, done) {
-	  var newScrollHeight = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
-	  var scrollDuration = arguments.length <= 3 || arguments[3] === undefined ? 300 : arguments[3];
+	  var newScrollHeight = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+	  var scrollDuration = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 300;
 
+	  var stepSizeMs = 15;
 	  var scrollHeight = el.scrollTop;
 	  var scrollDiff = scrollHeight - newScrollHeight;
-	  var scrollStep = Math.PI / (scrollDuration / 15);
+	  var maxStep = Math.floor(scrollDuration / stepSizeMs);
+	  var scrollStep = Math.PI / maxStep;
 	  var cosParameter = scrollDiff / 2;
-	  var scrollCount = 0;
-	  var scrollMargin = void 0;
+	  var round = function round(num) {
+	    return (scrollDiff > 0 ? Math.ceil : Math.floor)(num * 2).toFixed() / 2;
+	  };
+	  var stepCount = 0;
+	  var scrollMargin = 0;
 
 	  var step = function step() {
-	    setTimeout(function () {
-	      if (el.scrollTop !== newScrollHeight) {
-	        requestAnimationFrame(step);
-	        scrollCount = scrollCount + 1;
-	        scrollMargin = round(cosParameter - cosParameter * Math.cos(scrollCount * scrollStep));
-	        el.scrollTop = scrollHeight - scrollMargin;
-	      } else {
-	        done();
-	      }
-	    }, 15);
+	    stepCount = stepCount + 1;
+	    scrollMargin = round(cosParameter - cosParameter * Math.cos(stepCount * scrollStep));
+	    return stepCount === maxStep;
+	  };
+	  var draw = function draw() {
+	    el.scrollTop = scrollHeight - scrollMargin;
 	  };
 
-	  requestAnimationFrame(step);
+	  // `Loop` runs on each call from `requestAnimationFrame`, will run `step` each 16ms id
+	  var timeAccumulator = Date.now();
+	  var loop = function loop() {
+	    var finished = false;
+	    var now = Date.now();
+	    while (finished === false && now - timeAccumulator >= stepSizeMs) {
+	      finished = step();
+	      timeAccumulator += stepSizeMs;
+	    }
+	    draw();
+	    if (finished) {
+	      done();
+	    } else {
+	      requestAnimationFrame(loop);
+	    }
+	  };
+	  requestAnimationFrame(loop);
 	};
 
 	var marginParam = 100 / _categoryOrder2.default.length;
