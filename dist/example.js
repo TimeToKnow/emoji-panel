@@ -44,16 +44,16 @@ var EmojiPanel =
 /******/ ({
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(61);
 	module.exports = __webpack_require__(62);
 
 
-/***/ },
+/***/ }),
 
 /***/ 61:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -115,13 +115,13 @@ var EmojiPanel =
 	// End of examples
 	// ***************************************
 
-/***/ },
+/***/ }),
 
 /***/ 62:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ }
+/***/ })
 
 /******/ });
