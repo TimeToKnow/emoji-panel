@@ -34,7 +34,7 @@
   "author": "unimonkiez",
   "license": "MIT",
   "dependencies": {
-    "emoji-datasource": "2.4.x"
+    "emoji-datasource": "4.0.x"
   },
   "devDependencies": {
     "absurd": "^0.3.34",
