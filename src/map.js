@@ -4,14 +4,14 @@ const SIZE = Constant.SIZE;
 const CATEGORY = Constant.CATEGORY;
 
 const categoryDataMap = {
-  Activity: CATEGORY.ACTIVITY,
-  Flags: CATEGORY.FLAGS,
-  Foods: CATEGORY.FOODS,
-  Nature: CATEGORY.NATURE,
-  Objects: CATEGORY.OBJECTS,
-  People: CATEGORY.PEOPLE,
-  Places: CATEGORY.PLACES,
-  Symbols: CATEGORY.SYMBOLS
+  'Activities': CATEGORY.ACTIVITY,
+  'Flags': CATEGORY.FLAGS,
+  'Food & Drink': CATEGORY.FOODS,
+  'Animals & Nature': CATEGORY.NATURE,
+  'Objects': CATEGORY.OBJECTS,
+  'Smileys & People': CATEGORY.PEOPLE,
+  'Travel & Places': CATEGORY.PLACES,
+  'Symbols': CATEGORY.SYMBOLS
 };
 
 const categoryNameMap = {
