@@ -72,7 +72,7 @@ module.exports = (api, imageSet, size) => {
   }, categoryOrder.reduce((catObj, category) => Object.assign(catObj,
     emojiData[category].reduce((emojiObj, emoji) => Object.assign(emojiObj, {
       [`.ep-e[data-index="${emoji.index}"]`]: Object.assign({
-        'background-position': `-${sizeNumber * emoji.sheet_x}px -${sizeNumber * emoji.sheet_y}px`
+        'background-position': `-${((2 + sizeNumber) * emoji.sheet_x) + 1}px -${((2 + sizeNumber) * emoji.sheet_y) + 1}px`
       }, !emoji[getBoolNameByImageSet(imageSet)] && {
         display: 'none'
       })
